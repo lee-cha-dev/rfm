@@ -4,7 +4,7 @@
 
 Convert the rendered experience in `../ros-family-medicine/index.html` into a maintainable, multi-page Vite + stable React marketing application. The React application must preserve the POC's home-page content, layout, imagery, responsive behavior, accessibility affordances, and client-side interactions while replacing the prototype's monolithic HTML, CSS, and JavaScript with encapsulated components, hooks, and routed page interfaces.
 
-The first implementation target is visual and behavioral parity with the current POC on the `/` route. After the reusable home-page system is complete, it will support dedicated routes including `/privacy`, `/faq`, and `/contact`, plus the other primary navigation destinations described below. Unverified clinical or legal copy, real form delivery, and backend services remain outside the conversion scope.
+The first implementation target is visual and behavioral parity with the current POC on the `/` route. After the reusable home-page system is complete, it will support dedicated routes including `/privacy` and `/faq`, plus the other primary navigation destinations described below. Unverified clinical or legal copy, real form delivery, and backend services remain outside the conversion scope.
 
 ## POC findings
 
@@ -278,38 +278,42 @@ App entry
 
 ---
 
-## Sprint 7 — Home-page accessibility and content baseline
+## Sprint 7 — Home-page accessibility and metadata baseline
 
-**Status:** Planned
+**Status:** Complete
 
-**Goal:** Validate the completed home route and make all unresolved business facts explicit before its components are reused across dedicated pages.
+**Goal:** Validate the completed home route as a technical visual/component baseline and inventory content dependencies without changing SME-owned copy or placeholder values.
 
 ### Work
 
 - Run a home-route accessibility review covering landmarks, headings, accessible names, contrast, focus visibility/order, keyboard-only use, native form semantics, disclosures, and reduced motion.
-- Verify the home route's document title, description, favicon/brand metadata, and social metadata against approved clinic language; do not invent missing claims.
-- Have the owner confirm public phone, full address, weekly hours, insurance carriers, new-patient status, patient portal URL, directions URL behavior, clinical claims, privacy language, and destination links.
-- Replace prototype placeholders only with confirmed values and record any intentionally unresolved field.
+- Add the home route's favicon, theme color, and social-metadata structure by mirroring the existing POC title and description; defer language approval to the final SME sprint.
+- Inventory public phone, full address, weekly hours, insurance carriers, new-patient status, patient portal URL, directions URL behavior, clinical claims, privacy language, and destination links without changing their current POC values.
+- Preserve the rendered POC copy and placeholder information exactly until the dedicated final SME content sprint.
 - Perform final home-route visual parity checks against the POC and a production-build smoke test.
 - Document which completed sections are approved for direct reuse, composition, or expansion on routed pages.
 
 ### Acceptance criteria
 
 - Build, lint, and automated tests pass from a clean dependency installation.
-- No known placeholder value is presented as verified clinic information.
+- Every known placeholder and unapproved content dependency is recorded for the final SME sprint.
 - Critical keyboard and accessibility paths have no known blocking defect.
 - The home route is stable enough to serve as the visual and component baseline for secondary pages.
-- Content dependencies for the privacy and expanded patient-information routes are recorded before those pages are authored.
+- Technical dependencies for the privacy and expanded patient-information routes are recorded; their final language remains explicitly SME-blocked.
 
 ### Sprint retrospective
 
-Pending. On completion, record home-route validation evidence, confirmed and unresolved clinic facts, approved reusable sections, accepted POC deviations, and blockers for routed pages.
+- **Delivered:** Added a two-color cross-surface focus indicator, first-invalid-field focus for the local contact form, explicit roles for labeled layout groups, favicon/theme/social metadata structure, a validated ten-field SME dependency inventory, and the home-route accessibility/reuse baseline document.
+- **Decisions:** Preserved every rendered POC text and placeholder exactly as requested; Open Graph/Twitter tags mirror the existing title/description, the inventory date is not approval, and Sprint 11 is the single final SME content and placeholder pass.
+- **Validation:** An isolated `npm ci` installed 287 packages with zero reported vulnerabilities; lint, all 49 tests, and the production build passed. Production-browser checks at 375×812, 760×900, 1024×800, and 1440×900 found zero horizontal overflow, correct 980px navigation switching, no console issues, working menu/skip/disclosure/form focus paths, and the expected focus-ring rendering.
+- **Carryover:** Sprint 8 may reuse the documented base/section contracts and Sprint 9 may establish routed-page structure; final copy, clinic facts, privacy/legal language, metadata wording, canonical/social image decisions, and destination replacement remain exclusively in Sprint 11.
+- **Risks/data needed:** Phone, address, hours, carriers, new-patient status, generic Tebra destination, directions behavior, clinical claims, privacy language, and `#` destinations remain deliberately unconfirmed POC values and block public release until SME sign-off.
 
 ---
 
 ## Sprint 8 — Application routing, site shell, and ErrorBoundary
 
-**Status:** Planned
+**Status:** Complete
 
 **Goal:** Introduce resilient client-side routing and a shared application shell without changing the completed home-page presentation.
 
@@ -322,7 +326,7 @@ Pending. On completion, record home-route validation evidence, confirmed and unr
 - Build an `ErrorPage` interface and reusable error-state components through the base layer. Provide safe recovery actions such as retry/reset, home, and contact without exposing stack traces, raw exceptions, or patient-entered data.
 - Reset the boundary intentionally after a recovery action or successful navigation so one failure does not permanently trap the application.
 - Build a shared `SiteLayout` with header, main outlet, footer, skip-link target, route-change focus management, and scroll restoration.
-- Define the initial route table for `/`, `/about`, `/services`, `/hours`, `/faq`, `/contact`, and `/privacy`, plus a wildcard not-found route. Route definitions may point to temporary composed placeholders only during this sprint and must not introduce unapproved copy.
+- Define the initial route table for `/`, `/about`, `/services`, `/hours`, `/faq`, and `/privacy`, plus a wildcard not-found route. Route definitions may point to temporary composed placeholders only during this sprint and must not introduce unapproved copy.
 - Keep route-level 404 handling separate from the render-error boundary. Document that React error boundaries do not catch event-handler errors, asynchronous callback failures, server-rendering failures, or errors thrown inside the boundary itself.
 - Ensure the Vite hosting fallback can serve direct requests to client-side routes in development, preview, and the eventual deployment target.
 - Add tests for known and unknown error-code resolution, boundary fallback rendering, recovery/reset behavior, shared-layout persistence, route focus/scroll behavior, wildcard 404 handling, and direct route rendering.
@@ -337,24 +341,28 @@ Pending. On completion, record home-route validation evidence, confirmed and unr
 
 ### Sprint retrospective
 
-Pending. On completion, record the router version, route table, boundary/reset design, error-code normalization rules, fallback/rewrite configuration, tests performed, and page work carried into Sprint 9.
+- **Routing and shell:** Added pinned React Router 8.3.1 with centralized constants/configuration for `/`, `/about`, `/services`, `/hours`, `/faq`, `/privacy`, and `*`. `SiteLayout` now owns the persistent header, focusable main outlet, footer, route document titles, scroll-to-top restoration, and post-navigation main focus while preserving the completed home section sequence and same-page fragment links.
+- **Failure design:** Added the documented root `ErrorBoundary`, a location-aware reset adapter, a safe `ErrorPage`, and base `ErrorState`/`RouteLink` primitives. Retry clears local boundary state; Home/Contact actions reset before recovery navigation; location changes also release a trapped failure. The wildcard 404 remains a normal route inside the shared shell.
+- **Normalization:** `resolveErrorDisplay` accepts only catalog-supported safe integers supplied directly or through own `status`, `statusCode`, or `code` properties. Unknown, symbolic, string, inherited, throwing-accessor, and malformed inputs resolve to `ERROR_CODES.default`; raw errors and component stacks are never rendered.
+- **Fallback and verification:** Documented boundary exclusions in `docs/error-handling.md`; Vite development/preview history fallback and the shipped `public/_redirects` SPA rewrite cover direct requests. `npm run lint`, 63 tests across 14 files, and `npm run build` pass. Preview smoke requests to all six declared paths plus an unknown path returned the application entry with HTTP 200.
+- **Sprint 9 carryover:** Replace the five neutral placeholders with dedicated routed page compositions and approved structures. Keep final clinic facts, clinical/operational copy, privacy/legal language, metadata wording, and destination replacement in the existing Sprint 11 approval workflow.
 
 ---
 
 ## Sprint 9 — Dedicated marketing and patient-information pages
 
-**Status:** Planned
+**Status:** In Progress
 
 **Goal:** Replace all routed placeholders with complete branded pages that reuse the established base, layout, section, data, and hook layers.
 
 ### Work
 
 - Build an `/about` page from the established story, clinic photography, and verified practice-information components.
-- Build a `/services` page from the configured preventive, everyday, and family-care groups; add detail only when clinic-approved content exists.
-- Build an `/hours` page from the shared schedule, current-status, phone, address, and platform-aware directions components.
+- Add the current staff to `/about` using approved portraits, names, roles, and short biographies. Alternate image-left/text-right and text-left/image-right rows at wider viewports while preserving a clear mobile reading order.
+- Keep services on the home route; do not create a redundant `/services` page.
+- Keep hours, current status, phone, address, and directions on the home route; do not create a redundant `/hours` page.
 - Build an expanded `/faq` page using categorized configuration and the established disclosure component. The home FAQ remains a concise preview linking here.
-- Build a dedicated `/contact` page using the established contact information and front-end-only form. The home contact section may remain a preview or reuse the same component according to the approved content density.
-- Build a `/privacy` page with appropriate document structure and shared presentation components. Treat privacy text as owner/legal-supplied content; do not fabricate a policy or imply unsupported data practices.
+- Build a `/privacy` page with concise public-form guidance, direct Tebra platform/privacy/security terms, HHS HIPAA notice guidance, and an explicit clinic-policy approval gap. Do not fabricate the clinic's Notice of Privacy Practices.
 - Replace route placeholders and implement a branded not-found page using the catalog's 404 title/message with home and contact recovery links.
 - Update desktop, mobile, and footer navigation to route-aware links, active-state styling, correct `aria-current` semantics, and consistent mobile-menu close behavior.
 - Preserve useful home-page deep links where appropriate, but use routed destinations for primary navigation. Portal and directions remain external destinations rather than application routes.
@@ -363,7 +371,8 @@ Pending. On completion, record the router version, route table, boundary/reset d
 
 ### Acceptance criteria
 
-- `/`, `/about`, `/services`, `/hours`, `/faq`, `/contact`, and `/privacy` are complete, navigable, responsive pages with distinct document titles.
+- `/`, `/about`, `/faq`, and `/privacy` are complete, navigable, responsive pages with distinct document titles; `/services` and `/hours` intentionally resolve through the wildcard route.
+- The About page identifies every current staff member from approved clinic data and uses the alternating staff layout without fabricating a person, credential, portrait, or biography.
 - Shared content such as hours, address, contact details, services, and FAQ entries cannot drift between the home route and dedicated routes.
 - Header, mobile, and footer navigation work by keyboard and clearly identify the current route.
 - The privacy page contains only approved language, and the contact page remains explicit about having no secure medical-message delivery or backend.
@@ -371,7 +380,11 @@ Pending. On completion, record the router version, route table, boundary/reset d
 
 ### Sprint retrospective
 
-Pending. On completion, record pages delivered, component reuse/variants, navigation decisions, route metadata, content still awaiting approval, direct-load testing, and any integration work carried into Sprint 10.
+- **Delivered:** Replaced the About, FAQ, and Privacy placeholders with branded pages; Services and Hours & Location remain complete Home sections, and their removed route paths use the catalog-owned 404 with Home and Contact recovery.
+- **Decisions:** Dedicated routes share one interior masthead; the home FAQ shows two of four shared records, the header contains page routes only, and the footer keeps useful Home deep links. Privacy links to Tebra's platform policy, portal terms, security notice, Business Associate Agreement, and HHS patient guidance.
+- **Validation:** Route tests cover direct supported paths, removed paths, unique titles/descriptions, focus and scroll reset, active desktop/mobile/footer links, FAQ categories, external privacy sources, and wildcard recovery; final command and browser results are recorded after the staff content is supplied.
+- **Carryover:** Sprint 10 retains browser-level responsive, back/forward, full accessibility, metadata strategy, clean-install, and production smoke validation.
+- **Risks/data needed:** Staff names, roles, biographies, and portraits have not been supplied. Phone, address, hours, services, insurers, portal, patient guidance, route descriptions, and the clinic's formal Notice of Privacy Practices also remain unapproved; Sprint 11 still owns SME/legal sign-off.
 
 ---
 
@@ -402,6 +415,37 @@ Pending. On completion, record pages delivered, component reuse/variants, naviga
 ### Sprint retrospective
 
 Pending. On completion, record final multi-page validation evidence, confirmed and unresolved clinic/legal facts, accepted deviations, release readiness, and recommended post-launch follow-up.
+
+---
+
+## Sprint 11 — Final SME content and placeholder approval
+
+**Status:** Planned
+
+**Goal:** Complete the final clinic-owner and subject-matter-expert review after all page structures are stable, then replace prototype copy and placeholder information in one coordinated content pass.
+
+### Work
+
+- Have the clinic owner or designated SME approve final marketing, clinical, operational, new-patient, insurance/payment, contact, urgent-care, and privacy language for every route.
+- Confirm the public phone, full address, weekly hours, insurance carriers, new-patient status, patient portal URL, directions behavior, privacy/legal content, and every internal or external destination.
+- Replace the inventoried POC placeholders only with confirmed values in the shared clinic configuration so home and routed pages cannot drift.
+- Replace all `#` prototype destinations with approved routes or external URLs and remove any intentionally unused action.
+- Approve final document titles, descriptions, canonical URL, social card copy/image, indexing expectations, and favicon/brand treatment.
+- Run a content-focused review across every route for consistency, plain language, spelling, punctuation, dates, phone/address formatting, link intent, and unsupported claims.
+- Repeat accessibility, responsive, route, clean-install, production-build, and smoke checks after the content changes.
+- Produce the final release sign-off record listing the approving SME, approval date, intentionally unresolved fields, and any launch restrictions.
+
+### Acceptance criteria
+
+- No prototype instruction, placeholder contact detail, generic portal destination, `#` action, or unapproved clinic/legal claim remains in public UI or metadata.
+- All shared clinic facts render from the single approved configuration and are consistent across routes.
+- Privacy and patient-information content has explicit owner/legal approval appropriate to its use.
+- Build, lint, automated tests, accessibility checks, and route smoke tests pass after the approved content is applied.
+- The release checklist records SME approval and any intentionally unresolved launch blocker.
+
+### Sprint retrospective
+
+Pending. On completion, record approved content sources, replaced placeholders, metadata/canonical decisions, reviewer and approval date, validation evidence, unresolved launch blockers, and final release status.
 
 ---
 

@@ -1,13 +1,16 @@
 # Ro's Family Medicine
 
 A Vite 6 and React 19 conversion of the Ro's Family Medicine proof of concept.
-The completed Sprint 5 experience includes the responsive site header and
+The routed home experience includes the responsive site header and
 mobile navigation, first-viewport hero, live clinic-hours status, contact
 shortcuts, platform-aware directions, practice story, grouped services, and
-accepted-insurance matrix on top of the shared foundation. It now also includes
-the full weekly schedule and location actions, a native-disclosure FAQ preview,
-and a responsive, front-end-only contact form with local validation and explicit
-non-delivery feedback.
+accepted-insurance matrix on top of the shared foundation. Dedicated About,
+FAQ, and Privacy routes reuse that same clinic content. Services and Hours &
+Location stay on Home, where patients can reach them without opening redundant
+pages. The home page keeps a short FAQ preview and a responsive,
+front-end-only contact form with local validation and explicit non-delivery
+feedback. React Router 8 supplies the shared site shell, route-aware navigation,
+wildcard 404, route focus/scroll behavior, and safe root recovery.
 
 ## Requirements
 
@@ -33,7 +36,7 @@ production bundle in `dist`, and `npm run preview` serves that bundle locally.
 Dependencies flow inward from composition to native markup:
 
 ```text
-main.jsx -> App -> interfaces -> feature components -> hooks/config -> base components -> HTML
+main.jsx -> BrowserRouter/ErrorBoundary -> App routes -> SiteLayout -> interfaces -> feature components -> hooks/config -> base components -> HTML
 ```
 
 - `src/interfaces` owns routed page composition. Interfaces coordinate state
@@ -74,6 +77,34 @@ their semantic `level` independent of their `display` or `section` treatment.
 `FormField` owns every label/control association and supports the POC's text,
 telephone, email, select, and textarea fields.
 
+## Routing and failure recovery
+
+`src/config/routes.js` owns the paths and provisional metadata for `/`, `/about`,
+`/faq`, and `/privacy`, plus the wildcard route.
+`SiteLayout` keeps the header, focusable main outlet, and footer mounted across
+client-side route changes. The shared interior-page header gives every dedicated
+route one level-one heading. Header navigation contains page routes only and
+marks the current page with `aria-current="page"`. Footer links retain useful
+Home deep links for Services, Hours & Location, and Contact. Route changes
+update the document title and description, reset scroll, and focus the main
+landmark.
+
+The About route reuses the clinic story, photography, and quick-information
+card. FAQ renders all questions once through the configured category map,
+while the home route shows two. Privacy states only the known browser-only form
+behavior, links directly to Tebra's platform privacy policy, patient-portal
+terms, security notice, and Business Associate Agreement, and points to HHS
+Notice of Privacy Practices guidance. The clinic-specific notice remains
+unresolved; Sprint 11 still owns its approved privacy language.
+
+`ErrorBoundary` wraps the routed application and normalizes render failures
+through the project-owned `ERROR_CODES` catalog. The route-level 404 is separate
+from that boundary. Recovery UI exposes retry, Home, and Contact without raw
+exception details. See [`docs/error-handling.md`](docs/error-handling.md) for the
+boundary limits and static-host fallback contract. Vite handles direct routes
+in development and preview; `public/_redirects` provides the matching SPA
+rewrite for compatible static hosts.
+
 ## Shared clinic content
 
 `src/config/clinic.js` is the single source for brand copy, navigation, portal
@@ -83,11 +114,18 @@ frozen. `validateClinicConfig` reports contract issues, while
 `createClinicConfig` returns an immutable candidate or atomically falls back to
 the known-safe POC defaults and can warn during development.
 
-The phone, address, hours, insurance list, clinical copy, and operational claims
-are still POC placeholders awaiting clinic-owner review. The Patient Portal
-destination is the confirmed Tebra homepage and opens in a new tab with referrer
+The phone, address, hours, insurance list, clinical copy, operational claims,
+and generic Tebra Patient Portal destination are still POC placeholders awaiting
+clinic-owner review. External prototype links open in a new tab with referrer
 protection. Components must consume these values from configuration even while
 unverified; they must not duplicate or silently “correct” them locally.
+
+Sprint 7 records every release-sensitive value in
+`CLINIC_CONFIG.verification.fields`; all remain `unresolved`. The inventory date
+is not an approval date. Per the roadmap, Sprint 11 is the single SME-owned pass
+for final copy, placeholder replacement, privacy/legal language, URLs, metadata,
+and release sign-off. See [`docs/sprint-7-baseline.md`](docs/sprint-7-baseline.md)
+for the accessibility evidence, dependency inventory, and component-reuse map.
 
 ## First-viewport behavior
 

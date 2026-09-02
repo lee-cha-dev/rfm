@@ -1,11 +1,14 @@
 import {
   Footer,
-  Image,
   Layout,
   Link,
   Navigation,
+  RouteLink,
   Shell,
+  Text,
 } from './base/index.js'
+import { useLocation } from 'react-router'
+import { isRouteActive } from '../config/routes.js'
 import './SiteFooter.css'
 
 /**
@@ -21,25 +24,32 @@ import './SiteFooter.css'
  * @company Lazy Software
  */
 function SiteFooter({ clinic }) {
+  const { pathname } = useLocation()
+
   return (
     <Footer className="site-footer">
       <Shell>
-        <Layout variant="grid" className="site-footer__grid">
-          <Image
-            {...clinic.assets.logos.primary}
-            alt={clinic.brand.name}
-            variant="brand"
-            className="site-footer__logo"
-          />
+        <Layout variant="row" className="site-footer__bar">
+          <Text variant="note" className="site-footer__copyright">
+            © 2026 {clinic.brand.name}. All rights reserved.
+          </Text>
           <Navigation
             ariaLabel="Footer navigation"
             variant="footer"
             className="site-footer__navigation"
           >
             {clinic.navigation.footer.map((item) => (
-              <Link href={item.href} external={item.external} key={item.id}>
-                {item.label}
-              </Link>
+              item.external ? (
+                <Link href={item.href} external key={item.id}>{item.label}</Link>
+              ) : (
+                <RouteLink
+                  to={item.href}
+                  ariaCurrent={isRouteActive(item.href, pathname) ? 'page' : undefined}
+                  key={item.id}
+                >
+                  {item.label}
+                </RouteLink>
+              )
             ))}
           </Navigation>
         </Layout>

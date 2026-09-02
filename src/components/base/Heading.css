@@ -6,7 +6,6 @@
 }
 
 .heading--display {
-  max-width: 12ch;
   font-size: var(--font-size-display);
   letter-spacing: var(--letter-spacing-display);
   line-height: var(--line-height-display);

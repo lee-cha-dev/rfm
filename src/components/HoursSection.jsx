@@ -1,4 +1,4 @@
-import { Heading, Layout, Link, Section, Shell, Text } from './base/index.js'
+import { Heading, Layout, Link, RouteLink, Section, Shell, Text } from './base/index.js'
 import { useMapDirections } from '../hooks/useMapDirections.js'
 import './HoursSection.css'
 
@@ -14,7 +14,7 @@ import './HoursSection.css'
  * @since 20260902
  * @company Lazy Software
  */
-function HoursSection({ clinic, userAgent }) {
+function HoursSection({ clinic, userAgent, headingLevel = 2, contactHref = '#contact' }) {
   const content = clinic.homeSections.hours
   const directionsHref = useMapDirections(clinic.contact.address.mapsQuery, userAgent)
 
@@ -24,12 +24,12 @@ function HoursSection({ clinic, userAgent }) {
         <Layout variant="grid" className="hours-section__grid">
           <Layout className="hours-section__copy">
             <Text variant="eyebrow">{content.eyebrow}</Text>
-            <Heading level={2} id="hours-heading">{content.heading}</Heading>
+            <Heading level={headingLevel} id="hours-heading">{content.heading}</Heading>
             <Text className="hours-section__body">{content.body}</Text>
             <Text className="hours-section__address">{clinic.contact.address.display}</Text>
             <Layout variant="actions" className="hours-section__actions">
               <Link href={directionsHref} variant="primary" external>{content.directionsLabel}</Link>
-              <Link href="#contact" variant="ghost">{content.contactLabel}</Link>
+              <RouteLink to={contactHref} variant="ghost">{content.contactLabel}</RouteLink>
             </Layout>
           </Layout>
           <Layout ariaLabel={content.scheduleLabel} className="hours-section__schedule">

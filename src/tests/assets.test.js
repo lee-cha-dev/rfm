@@ -4,10 +4,10 @@ import { describe, expect, it } from 'vitest'
 import { ASSETS } from '../config/assets.js'
 
 describe('asset manifest', () => {
-  it('references all seven copied web assets from the public directory', () => {
+  it('references every copied web asset from the public directory', () => {
     const assets = [...Object.values(ASSETS.logos), ...Object.values(ASSETS.photos)]
 
-    expect(assets).toHaveLength(7)
+    expect(assets).toHaveLength(8)
 
     for (const asset of assets) {
       expect(asset.src).toMatch(/^\/assets\/(logos|photos)\//)

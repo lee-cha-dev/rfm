@@ -4,9 +4,12 @@ import {
   Image,
   Link,
   Navigation,
+  RouteLink,
   Shell,
   Text,
 } from './base/index.js'
+import { useLocation } from 'react-router'
+import { isRouteActive, ROUTES } from '../config/routes.js'
 import { useMobileNavigation } from '../hooks/useMobileNavigation.js'
 import { useStickyHeader } from '../hooks/useStickyHeader.js'
 import './SiteHeader.css'
@@ -18,12 +21,14 @@ import './SiteHeader.css'
  *
  * @param {object} props The site-header properties.
  * @param {Readonly<import('../config/clinic.js').ClinicConfig>} props.clinic The validated clinic configuration.
+ * @param {boolean} [props.solid] Whether the route requires an opaque header surface.
  * @returns {import('react').JSX.Element} Responsive site navigation.
  * @author Lee Charles
  * @since 20260902
  * @company Lazy Software
  */
-function SiteHeader({ clinic }) {
+function SiteHeader({ clinic, solid = false }) {
+  const { pathname } = useLocation()
   const isScrolled = useStickyHeader()
   const {
     isOpen,
@@ -39,9 +44,13 @@ function SiteHeader({ clinic }) {
       <Link href="#main-content" className="site-header__skip-link">
         Skip to main content
       </Link>
-      <Header className={`site-header${isScrolled ? ' site-header--scrolled' : ''}`}>
+      <Header className={`site-header${isScrolled ? ' site-header--scrolled' : ''}${solid ? ' site-header--solid' : ''}`}>
         <Shell className="site-header__nav">
-          <Link href="#top" ariaLabel={`${clinic.brand.name} home`} className="site-header__brand">
+          <RouteLink
+            to={ROUTES.home}
+            ariaLabel={`${clinic.brand.name} home`}
+            className="site-header__brand"
+          >
             <Image
               {...clinic.assets.logos.header}
               alt={clinic.brand.name}
@@ -49,10 +58,16 @@ function SiteHeader({ clinic }) {
               loading="eager"
               className="site-header__logo"
             />
-          </Link>
+          </RouteLink>
           <Navigation ariaLabel="Primary navigation" className="site-header__desktop-navigation">
             {clinic.navigation.primary.map((item) => (
-              <Link href={item.href} key={item.id}>{item.label}</Link>
+              <RouteLink
+                to={item.href}
+                ariaCurrent={isRouteActive(item.href, pathname) ? 'page' : undefined}
+                key={item.id}
+              >
+                {item.label}
+              </RouteLink>
             ))}
             <Link
               href={clinic.navigation.portal.href}
@@ -84,14 +99,15 @@ function SiteHeader({ clinic }) {
             className={`site-header__mobile-navigation${isOpen ? ' site-header__mobile-navigation--open' : ''}`}
           >
             {clinic.navigation.primary.map((item, index) => (
-              <Link
-                href={item.href}
+              <RouteLink
+                to={item.href}
+                ariaCurrent={isRouteActive(item.href, pathname) ? 'page' : undefined}
                 key={item.id}
                 onClick={closeMenu}
                 elementRef={index === 0 ? firstLinkRef : undefined}
               >
                 {item.label}
-              </Link>
+              </RouteLink>
             ))}
             <Link
               href={clinic.navigation.portal.href}

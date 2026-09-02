@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { MemoryRouter } from 'react-router'
 import ContactSection from '../components/ContactSection.jsx'
 import FaqSection from '../components/FaqSection.jsx'
 import HoursSection from '../components/HoursSection.jsx'
@@ -11,7 +12,11 @@ afterEach(() => {
 
 describe('Sprint 5 patient-information sections', () => {
   it('renders every shared weekly-hours entry and a computed directions destination', () => {
-    render(<HoursSection clinic={CLINIC_CONFIG} userAgent="Mozilla/5.0 (iPhone)" />)
+    render(
+      <MemoryRouter>
+        <HoursSection clinic={CLINIC_CONFIG} userAgent="Mozilla/5.0 (iPhone)" />
+      </MemoryRouter>,
+    )
 
     const schedule = screen.getByLabelText('Clinic hours')
     CLINIC_CONFIG.weeklyHours.forEach(({ day, hours }) => {
@@ -23,13 +28,13 @@ describe('Sprint 5 patient-information sections', () => {
       'href',
       'https://maps.apple.com/?daddr=18%20Chesapeake%20Drive%2C%20Austin%2C%20AR%2072007',
     )
-    expect(screen.getByRole('link', { name: 'Contact clinic' })).toHaveAttribute('href', '#contact')
+    expect(screen.getByRole('link', { name: 'Contact clinic' })).toHaveAttribute('href', '/#contact')
   })
 
-  it('uses native keyboard-operable disclosure semantics for all configured questions', () => {
-    render(<FaqSection clinic={CLINIC_CONFIG} />)
+  it('uses native keyboard-operable disclosure semantics for the home preview', () => {
+    render(<MemoryRouter><FaqSection clinic={CLINIC_CONFIG} /></MemoryRouter>)
 
-    CLINIC_CONFIG.faqs.forEach(({ question, answer }) => {
+    CLINIC_CONFIG.faqs.slice(0, 2).forEach(({ question, answer }) => {
       const summary = screen.getByText(question)
       const disclosure = summary.closest('details')
 
@@ -40,6 +45,11 @@ describe('Sprint 5 patient-information sections', () => {
       expect(disclosure).toHaveAttribute('open')
       expect(within(disclosure).getByText(answer)).toBeInTheDocument()
     })
+    expect(screen.queryByText(CLINIC_CONFIG.faqs[2].question)).not.toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'View all patient questions →' })).toHaveAttribute(
+      'href',
+      '/faq',
+    )
   })
 
   it('labels contact fields, exposes input hints, and uses configured reason options', () => {
@@ -60,7 +70,7 @@ describe('Sprint 5 patient-information sections', () => {
     expect(screen.getByText(/not a secure patient-messaging channel/i)).toBeInTheDocument()
   })
 
-  it('validates locally and never claims or attempts network delivery', () => {
+  it('validates locally, focuses the first invalid field, and never attempts delivery', () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response())
     render(<ContactSection clinic={CLINIC_CONFIG} />)
 
@@ -69,6 +79,7 @@ describe('Sprint 5 patient-information sections', () => {
 
     expect(screen.getAllByRole('alert')).toHaveLength(4)
     expect(screen.getByRole('status')).toHaveTextContent('Nothing was sent')
+    expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus()
 
     fireEvent.change(screen.getByRole('textbox', { name: 'Name' }), { target: { value: 'Lee Charles' } })
     fireEvent.change(screen.getByRole('textbox', { name: 'Email' }), { target: { value: 'lee@example.com' } })

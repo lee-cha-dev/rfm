@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import QuickInformation from '../components/QuickInformation.jsx'
 import { CLINIC_CONFIG } from '../config/clinic.js'
@@ -6,11 +7,13 @@ import { CLINIC_CONFIG } from '../config/clinic.js'
 describe('QuickInformation', () => {
   it('renders deterministic hours and contact links from clinic configuration', () => {
     render(
-      <QuickInformation
-        clinic={CLINIC_CONFIG}
-        now={new Date(2026, 8, 7, 8, 0)}
-        userAgent="Mozilla/5.0 (iPhone)"
-      />,
+      <MemoryRouter>
+        <QuickInformation
+          clinic={CLINIC_CONFIG}
+          now={new Date(2026, 8, 7, 8, 0)}
+          userAgent="Mozilla/5.0 (iPhone)"
+        />
+      </MemoryRouter>,
     )
 
     expect(screen.getByText('Monday · 8:00 AM — 5:00 PM')).toBeInTheDocument()

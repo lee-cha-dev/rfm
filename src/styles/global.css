@@ -50,7 +50,8 @@ button {
 
 :focus-visible {
   outline: var(--border-focus);
-  outline-offset: 4px;
+  outline-offset: 2px;
+  box-shadow: var(--shadow-focus);
 }
 
 @media (prefers-reduced-motion: reduce) {

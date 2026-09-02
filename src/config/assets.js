@@ -47,5 +47,10 @@ export const ASSETS = Object.freeze({
       width: 1800,
       height: 1200,
     }),
+    roHenry: Object.freeze({
+      src: '/assets/photos/providers/ro_henry_aprn.jpeg',
+      width: 3024,
+      height: 4032,
+    }),
   }),
 })

@@ -1,4 +1,4 @@
-import { Disclosure, Heading, Layout, Link, Section, Shell, Text } from './base/index.js'
+import { Disclosure, Heading, Layout, RouteLink, Section, Shell, Text } from './base/index.js'
 import './FaqSection.css'
 
 /**
@@ -12,8 +12,9 @@ import './FaqSection.css'
  * @since 20260902
  * @company Lazy Software
  */
-function FaqSection({ clinic }) {
+function FaqSection({ clinic, limit = 2 }) {
   const content = clinic.homeSections.faq
+  const previewFaqs = clinic.faqs.slice(0, limit)
 
   return (
     <Section id="faq" ariaLabelledby="faq-heading" className="faq-section">
@@ -23,10 +24,10 @@ function FaqSection({ clinic }) {
             <Text variant="eyebrow">{content.eyebrow}</Text>
             <Heading level={2} id="faq-heading">{content.heading}</Heading>
             <Text variant="lede" className="faq-section__lede">{content.lede}</Text>
-            <Link href={content.link.href} variant="text">{content.link.label}</Link>
+            <RouteLink to={content.link.href} variant="text">{content.link.label}</RouteLink>
           </Layout>
           <Layout ariaLabel="Frequently asked questions" className="faq-section__list">
-            {clinic.faqs.map((faq) => (
+            {previewFaqs.map((faq) => (
               <Disclosure key={faq.id} summary={faq.question} className="faq-section__item">
                 <Text>{faq.answer}</Text>
               </Disclosure>

@@ -1,11 +1,12 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
+import { MemoryRouter } from 'react-router'
 import SiteHeader from '../components/SiteHeader.jsx'
 import { CLINIC_CONFIG } from '../config/clinic.js'
 
 describe('SiteHeader', () => {
   it('renders config-driven desktop navigation and the skip link', () => {
-    render(<SiteHeader clinic={CLINIC_CONFIG} />)
+    render(<MemoryRouter><SiteHeader clinic={CLINIC_CONFIG} /></MemoryRouter>)
 
     expect(screen.getByRole('link', { name: 'Skip to main content' })).toHaveAttribute(
       'href',
@@ -15,10 +16,10 @@ describe('SiteHeader', () => {
       name: 'Primary navigation',
       hidden: true,
     })
-    expect(within(desktopNavigation).getByRole('link', { name: 'Hours & location' })).toHaveAttribute(
-      'href',
-      '#hours',
-    )
+    expect(within(desktopNavigation).queryByRole('link', { name: 'Services' })).not.toBeInTheDocument()
+    expect(within(desktopNavigation).queryByRole('link', { name: 'Hours & location' })).not.toBeInTheDocument()
+    expect(within(desktopNavigation).queryByRole('link', { name: 'Contact' })).not.toBeInTheDocument()
+    expect(within(desktopNavigation).getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy')
     const patientPortal = within(desktopNavigation).getByRole('link', { name: 'Patient Portal' })
     expect(patientPortal).toHaveAttribute('href', 'https://www.tebra.com/')
     expect(patientPortal).toHaveAttribute('target', '_blank')
@@ -26,7 +27,7 @@ describe('SiteHeader', () => {
   })
 
   it('opens, focuses, closes on link activation, and reports accurate state', () => {
-    render(<SiteHeader clinic={CLINIC_CONFIG} />)
+    render(<MemoryRouter><SiteHeader clinic={CLINIC_CONFIG} /></MemoryRouter>)
     const trigger = screen.getByRole('button', { name: 'Open menu' })
 
     fireEvent.click(trigger)
@@ -44,7 +45,7 @@ describe('SiteHeader', () => {
   })
 
   it('closes on Escape and returns focus to the trigger', () => {
-    render(<SiteHeader clinic={CLINIC_CONFIG} />)
+    render(<MemoryRouter><SiteHeader clinic={CLINIC_CONFIG} /></MemoryRouter>)
     const trigger = screen.getByRole('button', { name: 'Open menu' })
     fireEvent.click(trigger)
     const mobileNavigation = screen.getByRole('navigation', { name: 'Mobile navigation' })
@@ -56,7 +57,9 @@ describe('SiteHeader', () => {
   })
 
   it('adds a readable surface after the transparent header leaves the hero top', () => {
-    const { container } = render(<SiteHeader clinic={CLINIC_CONFIG} />)
+    const { container } = render(
+      <MemoryRouter><SiteHeader clinic={CLINIC_CONFIG} /></MemoryRouter>,
+    )
     const header = container.querySelector('header')
 
     expect(header).not.toHaveClass('site-header--scrolled')

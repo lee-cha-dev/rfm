@@ -1,14 +1,16 @@
 import { describe, expect, it, vi } from 'vitest'
 import {
   CLINIC_CONFIG,
+  VERIFICATION_FIELDS,
   createClinicConfig,
+  isClinicContentConfirmed,
   validateClinicConfig,
 } from '../config/clinic.js'
 
 describe('clinic configuration', () => {
   it('centralizes the complete POC content contract as immutable data', () => {
-    expect(CLINIC_CONFIG.navigation.primary).toHaveLength(5)
-    expect(CLINIC_CONFIG.navigation.footer).toHaveLength(6)
+    expect(CLINIC_CONFIG.navigation.primary).toHaveLength(3)
+    expect(CLINIC_CONFIG.navigation.footer).toHaveLength(4)
     expect(CLINIC_CONFIG.weeklyHours).toHaveLength(7)
     expect(CLINIC_CONFIG.homeSections.about.photos).toHaveLength(2)
     expect(CLINIC_CONFIG.services).toHaveLength(3)
@@ -23,6 +25,10 @@ describe('clinic configuration', () => {
     expect(Object.isFrozen(CLINIC_CONFIG)).toBe(true)
     expect(Object.isFrozen(CLINIC_CONFIG.services[0].items)).toBe(true)
     expect(validateClinicConfig(CLINIC_CONFIG)).toEqual([])
+    expect(Object.keys(CLINIC_CONFIG.verification.fields)).toEqual(VERIFICATION_FIELDS)
+    VERIFICATION_FIELDS.forEach((field) => {
+      expect(isClinicContentConfirmed(CLINIC_CONFIG, field)).toBe(false)
+    })
   })
 
   it('reports malformed fields and returns safe defaults with a development warning', () => {

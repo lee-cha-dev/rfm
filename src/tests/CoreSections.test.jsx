@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it } from 'vitest'
 import AboutSection from '../components/AboutSection.jsx'
 import InsuranceSection from '../components/InsuranceSection.jsx'
@@ -7,7 +8,7 @@ import { CLINIC_CONFIG } from '../config/clinic.js'
 
 describe('Sprint 4 core sections', () => {
   it('renders the configured practice story and reserves both image dimensions', () => {
-    render(<AboutSection clinic={CLINIC_CONFIG} />)
+    render(<MemoryRouter><AboutSection clinic={CLINIC_CONFIG} /></MemoryRouter>)
 
     expect(
       screen.getByRole('heading', {
@@ -24,7 +25,7 @@ describe('Sprint 4 core sections', () => {
     expect(waitingRoom).toHaveAttribute('src', '/assets/photos/clinic-waiting-room.jpg')
     expect(waitingRoom).toHaveAttribute('width', '1800')
     expect(waitingRoom).toHaveAttribute('height', '1201')
-    expect(screen.getByRole('link', { name: 'Meet the practice →' })).toHaveAttribute('href', '#')
+    expect(screen.getByRole('link', { name: 'Meet the practice →' })).toHaveAttribute('href', '/about')
   })
 
   it('renders service groups and their items from configuration with nested list semantics', () => {

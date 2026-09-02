@@ -19,7 +19,7 @@ import './ServicesSection.css'
  * @since 20260902
  * @company Lazy Software
  */
-function ServicesSection({ clinic }) {
+function ServicesSection({ clinic, headingLevel = 2 }) {
   const content = clinic.homeSections.services
   const groups = clinic.services.map((group) => (
     <Layout className="services-section__group" key={group.id}>
@@ -38,7 +38,7 @@ function ServicesSection({ clinic }) {
         <Layout variant="grid" className="services-section__grid">
           <Layout className="services-section__intro">
             <Text variant="eyebrow">{content.eyebrow}</Text>
-            <Heading level={2} id="services-heading">{content.heading}</Heading>
+            <Heading level={headingLevel} id="services-heading">{content.heading}</Heading>
             <Text variant="lede" className="services-section__lede">{content.lede}</Text>
           </Layout>
           <List

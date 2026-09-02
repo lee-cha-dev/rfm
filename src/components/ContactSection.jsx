@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button, Form, FormField, Heading, Layout, Link, Section, Shell, Text } from './base/index.js'
 import './ContactSection.css'
 
@@ -52,12 +52,21 @@ function validateContactValues(values) {
  */
 function ContactSection({ clinic }) {
   const content = clinic.homeSections.contact
+  const formRef = useRef(null)
+  const shouldFocusErrorRef = useRef(false)
   const [values, setValues] = useState(() => ({
     ...EMPTY_VALUES,
     reason: clinic.contactReasons[0],
   }))
   const [errors, setErrors] = useState({})
   const [feedback, setFeedback] = useState('')
+
+  useEffect(() => {
+    if (!shouldFocusErrorRef.current || Object.keys(errors).length === 0) return
+
+    formRef.current?.querySelector('[aria-invalid="true"]')?.focus()
+    shouldFocusErrorRef.current = false
+  }, [errors])
 
   function handleChange(event) {
     const { name, value } = event.target
@@ -72,6 +81,7 @@ function ContactSection({ clinic }) {
     setErrors(nextErrors)
 
     if (Object.keys(nextErrors).length > 0) {
+      shouldFocusErrorRef.current = true
       setFeedback('Please correct the highlighted fields. Nothing was sent.')
       return
     }
@@ -94,7 +104,13 @@ function ContactSection({ clinic }) {
               {clinic.navigation.portal.label}
             </Link>
           </Layout>
-          <Form onSubmit={handleSubmit} noValidate ariaLabel="Contact clinic" className="contact-section__form">
+          <Form
+            onSubmit={handleSubmit}
+            noValidate
+            ariaLabel="Contact clinic"
+            elementRef={formRef}
+            className="contact-section__form"
+          >
             <Text className="contact-section__local-notice">{content.localOnlyNotice}</Text>
             <Layout variant="grid" className="contact-section__field-grid">
               <FormField

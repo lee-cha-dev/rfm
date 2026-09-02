@@ -21,21 +21,35 @@ import { ASSETS } from './assets.js'
  * @property {{primary: readonly ClinicLink[], footer: readonly ClinicLink[], portal: ClinicLink}} navigation Shared links.
  * @property {{phone: {display: string, href: string}, address: {display: string, mapsQuery: string}}} contact Public contact details.
  * @property {{about: object, services: object, insurance: object, hours: object, faq: object, contact: object}} homeSections Home-page section copy and media choices.
+ * @property {{about: object, faq: object, privacy: object}} pageContent Dedicated-route introduction and privacy-resource copy.
  * @property {readonly ClinicHoursEntry[]} weeklyHours Seven daily schedule entries.
  * @property {readonly {id: string, label: string, items: readonly string[]}[]} services Service groups.
  * @property {readonly string[]} insuranceCarriers Accepted carrier names.
  * @property {readonly {id: string, question: string, answer: string}[]} faqs Patient questions.
+ * @property {readonly {id: string, label: string, faqIds: readonly string[]}[]} faqCategories Patient-question groups.
  * @property {readonly string[]} contactReasons Public form choices.
+ * @property {{reviewDate: string, fields: Record<string, 'confirmed'|'unresolved'>}} verification Owner-review state for release-sensitive content.
  * @property {typeof ASSETS} assets Runtime image metadata.
  */
 
-const PRIMARY_NAVIGATION = [
-  { id: 'about', label: 'About', href: '#about' },
-  { id: 'services', label: 'Services', href: '#services' },
-  { id: 'hours', label: 'Hours & location', href: '#hours' },
-  { id: 'faq', label: 'FAQ', href: '#faq' },
-  { id: 'contact', label: 'Contact', href: '#contact' },
+export const VERIFICATION_FIELDS = [
+  'phone',
+  'address',
+  'weeklyHours',
+  'insuranceCarriers',
+  'newPatientStatus',
+  'portalUrl',
+  'directionsBehavior',
+  'clinicalClaims',
+  'privacyLanguage',
+  'destinationLinks',
 ]
+
+const ABOUT_LINK = { id: 'about', label: 'About', href: '/about' }
+const FAQ_LINK = { id: 'faq', label: 'FAQ', href: '/faq' }
+const PRIVACY_LINK = { id: 'privacy', label: 'Privacy', href: '/privacy' }
+
+const PRIMARY_NAVIGATION = [ABOUT_LINK, FAQ_LINK, PRIVACY_LINK]
 
 const PORTAL_LINK = {
   id: 'portal',
@@ -52,7 +66,12 @@ const DEFAULTS = {
   },
   navigation: {
     primary: PRIMARY_NAVIGATION,
-    footer: [...PRIMARY_NAVIGATION, PORTAL_LINK],
+    footer: [
+      ABOUT_LINK,
+      FAQ_LINK,
+      PRIVACY_LINK,
+      PORTAL_LINK,
+    ],
     portal: PORTAL_LINK,
   },
   contact: {
@@ -64,12 +83,12 @@ const DEFAULTS = {
   },
   homeSections: {
     about: {
-      eyebrow: 'A neighborhood practice, not a number',
+      eyebrow: 'A neighborhood clinic with a face and a front door',
       heading: 'Care begins with knowing who walked through the door.',
       lede: 'Ro’s Family Medicine should feel familiar before a patient ever arrives: clear, welcoming, and grounded in an ongoing relationship with the people and families we care for.',
       body: 'The clinic itself is part of the experience. Showing patients the real building and familiar interior makes the first visit feel less uncertain and gives the practice a sense of place that stock imagery cannot create.',
-      quote: '“Your Health. Your Story. Our Focus.” should read like a promise, not a slogan pasted into a template.',
-      link: { id: 'meet-practice', label: 'Meet the practice →', href: '#' },
+      quote: 'The line “Your Health. Your Story. Our Focus.” sets the tone before a patient walks through the door.',
+      link: { id: 'meet-practice', label: 'Meet the practice →', href: '/about' },
       photos: [
         {
           id: 'clinic-front',
@@ -108,7 +127,7 @@ const DEFAULTS = {
       eyebrow: 'Before your visit',
       heading: 'Questions should be easy to answer.',
       lede: 'A short homepage preview can lead into a categorized FAQ page instead of burying patients in an endless accordion.',
-      link: { id: 'all-questions', label: 'View all patient questions →', href: '#' },
+      link: { id: 'all-questions', label: 'View all patient questions →', href: '/faq' },
     },
     contact: {
       eyebrow: 'Contact Us',
@@ -119,6 +138,58 @@ const DEFAULTS = {
       privacyDetail: 'This public form is not a secure patient-messaging channel and should not be used for urgent medical concerns.',
       submitLabel: 'Send message',
       localAcknowledgement: 'Your entry passed the local checks, but nothing was sent or saved. Please call the clinic or use the secure Patient Portal to get in touch.',
+    },
+  },
+  pageContent: {
+    about: {
+      eyebrow: 'Our mission',
+      heading: 'Listen closely. Care personally.',
+      lede: 'We give each patient time to be heard and explain their care in plain language.',
+    },
+    faq: {
+      eyebrow: 'Patient questions',
+      heading: 'Straight answers before the appointment.',
+      lede: 'Start here for first-visit guidance, portal access, and the insurance information currently available in this preview.',
+    },
+    privacy: {
+      eyebrow: 'Privacy',
+      heading: 'Privacy, the portal, and your records.',
+      lede: 'Tebra runs the patient portal. Its policies cover information handled inside that platform; the clinic’s own Notice of Privacy Practices covers how the practice may use and share protected health information.',
+      websiteNotice: 'Please do not put medical details in the public website form. It only checks fields in your browser, and nothing is sent or saved.',
+      portalNotice: 'Use the Tebra Patient Portal for patient communication. Tebra says information provided through its platform may be protected health information and is handled under federal and state law plus its agreement with the healthcare provider.',
+      clinicNotice: 'Ro’s Family Medicine has not supplied its approved Notice of Privacy Practices for this preview. HHS requires a HIPAA-covered provider with a website to post its current notice there, so this page cannot stand in for the clinic’s signed policy.',
+      resources: [
+        {
+          id: 'tebra-platform-privacy',
+          label: 'Tebra Platform Privacy Policy',
+          href: 'https://www.tebra.com/platform-privacy-policy',
+          description: 'Covers the EHR, Patient Portal, telehealth, billing, and related Tebra platform services.',
+        },
+        {
+          id: 'tebra-portal-terms',
+          label: 'Tebra Patient Portal Terms of Service',
+          href: 'https://www.tebra.com/patient-portal-terms-service',
+          description: 'Explains portal use, account responsibilities, patient information, and limits of the service.',
+        },
+        {
+          id: 'tebra-security',
+          label: 'Tebra Security Notice',
+          href: 'https://www.tebra.com/security-notice',
+          description: 'Describes sign-in controls, encryption, role-based access, and other platform safeguards.',
+        },
+        {
+          id: 'tebra-baa',
+          label: 'Tebra Business Associate Agreement',
+          href: 'https://www.tebra.com/business-associate-agreement',
+          description: 'Sets the HIPAA terms between Tebra and a healthcare customer when Tebra handles protected health information.',
+        },
+        {
+          id: 'hhs-privacy-notice',
+          label: 'HHS Notice of Privacy Practices guidance',
+          href: 'https://www.hhs.gov/hipaa/for-individuals/notice-privacy-practices/index.html',
+          description: 'Explains what a provider’s clinic-specific notice must tell patients and where that notice must be available.',
+        },
+      ],
     },
   },
   weeklyHours: [
@@ -187,11 +258,30 @@ const DEFAULTS = {
       answer: 'Link this answer into a dedicated Patient Information page where details can stay current and easy to scan.',
     },
   ],
+  faqCategories: [
+    { id: 'getting-started', label: 'Getting started', faqIds: ['new-patients', 'first-visit'] },
+    { id: 'patient-resources', label: 'Patient resources', faqIds: ['patient-portal', 'insurance-payment'] },
+  ],
   contactReasons: [
     'General question',
     'New patient question',
     'Website / administrative question',
   ],
+  verification: {
+    reviewDate: '2026-09-02',
+    fields: {
+      phone: 'unresolved',
+      address: 'unresolved',
+      weeklyHours: 'unresolved',
+      insuranceCarriers: 'unresolved',
+      newPatientStatus: 'unresolved',
+      portalUrl: 'unresolved',
+      directionsBehavior: 'unresolved',
+      clinicalClaims: 'unresolved',
+      privacyLanguage: 'unresolved',
+      destinationLinks: 'unresolved',
+    },
+  },
   assets: ASSETS,
 }
 
@@ -303,6 +393,26 @@ export function validateClinicConfig(candidate) {
     issues.push('homeSections.contact must contain complete form and privacy copy')
   }
 
+  for (const pageName of ['about', 'faq']) {
+    const page = config.pageContent?.[pageName]
+    if (!['eyebrow', 'heading', 'lede'].every((field) => isText(page?.[field]))) {
+      issues.push(`pageContent.${pageName} must contain complete introduction copy`)
+    }
+  }
+
+  const privacyPage = config.pageContent?.privacy
+  const validPrivacyResources = Array.isArray(privacyPage?.resources)
+    && privacyPage.resources.length > 0
+    && privacyPage.resources.every((resource) => (
+      isText(resource?.id)
+      && isText(resource?.label)
+      && /^https:\/\//.test(resource?.href ?? '')
+      && isText(resource?.description)
+    ))
+  if (!['eyebrow', 'heading', 'lede', 'websiteNotice', 'portalNotice', 'clinicNotice'].every((field) => isText(privacyPage?.[field])) || !validPrivacyResources) {
+    issues.push('pageContent.privacy must contain complete notices and external resources')
+  }
+
   const hours = config.weeklyHours
   const validHours = Array.isArray(hours)
     && hours.length === 7
@@ -323,9 +433,31 @@ export function validateClinicConfig(candidate) {
     && config.faqs.every((faq) => isText(faq?.id) && isText(faq?.question) && isText(faq?.answer))
   if (!validFaqs) issues.push('faqs must contain valid questions and answers')
 
+  const faqIds = new Set(Array.isArray(config.faqs) ? config.faqs.map((faq) => faq?.id) : [])
+  const categorizedFaqIds = Array.isArray(config.faqCategories)
+    ? config.faqCategories.flatMap((category) => category?.faqIds ?? [])
+    : []
+  const validFaqCategories = Array.isArray(config.faqCategories)
+    && config.faqCategories.length > 0
+    && config.faqCategories.every((category) => (
+      isText(category?.id)
+      && isText(category?.label)
+      && Array.isArray(category?.faqIds)
+      && category.faqIds.length > 0
+      && category.faqIds.every((faqId) => faqIds.has(faqId))
+    ))
+    && categorizedFaqIds.length === faqIds.size
+    && new Set(categorizedFaqIds).size === faqIds.size
+  if (!validFaqCategories) issues.push('faqCategories must categorize every FAQ exactly once')
+
   if (!Array.isArray(config.contactReasons) || config.contactReasons.length === 0 || !config.contactReasons.every(isText)) {
     issues.push('contactReasons must contain non-empty choices')
   }
+
+  const verification = config.verification
+  const validVerification = isText(verification?.reviewDate)
+    && VERIFICATION_FIELDS.every((field) => ['confirmed', 'unresolved'].includes(verification?.fields?.[field]))
+  if (!validVerification) issues.push('verification must record every release-sensitive field')
 
   if (!config.assets?.logos || !config.assets?.photos) issues.push('assets must contain logo and photo manifests')
 
@@ -366,3 +498,18 @@ export function createClinicConfig(candidate = DEFAULTS, { warn = false } = {}) 
  * @company Lazy Software
  */
 export const CLINIC_CONFIG = createClinicConfig(DEFAULTS, { warn: import.meta.env.DEV })
+
+/**
+ * Reports whether the clinic owner has confirmed one release-sensitive field.
+ * Sprint 11 can use this gate while replacing prototype values after SME sign-off.
+ *
+ * @param {Readonly<ClinicConfig>} clinic The validated clinic configuration.
+ * @param {string} field A key from VERIFICATION_FIELDS.
+ * @returns {boolean} Whether the field is confirmed for public presentation.
+ * @author Lee Charles
+ * @since 20260902
+ * @company Lazy Software
+ */
+export function isClinicContentConfirmed(clinic, field) {
+  return clinic.verification.fields[field] === 'confirmed'
+}

@@ -10,7 +10,7 @@ import './Layout.css'
  * @param {'block'|'row'|'grid'|'stack'|'actions'} [props.variant] The arrangement.
  * @param {string} [props.className] An optional composition class.
  * @param {string} [props.id] An optional anchor identifier.
- * @param {string} [props.ariaLabel] An accessible label for meaningful groups.
+ * @param {string} [props.ariaLabel] An accessible label for a meaningful group.
  * @returns {import('react').JSX.Element} A native layout grouping.
  * @author Lee Charles
  * @since 20260902
@@ -21,7 +21,7 @@ export function Layout({ children, variant = 'block', className = '', id, ariaLa
   const safeVariant = supportedVariants.includes(variant) ? variant : 'block'
   const classes = ['layout', `layout--${safeVariant}`, className].filter(Boolean).join(' ')
 
-  return <div className={classes} id={id} aria-label={ariaLabel}>{children}</div>
+  return <div className={classes} id={id} role={ariaLabel ? 'group' : undefined} aria-label={ariaLabel}>{children}</div>
 }
 
 /**

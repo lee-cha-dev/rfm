@@ -1,10 +1,11 @@
 import { render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import HomePage from '../interfaces/HomePage.jsx'
+import { MemoryRouter } from 'react-router'
+import App from '../App.jsx'
 
 describe('HomePage', () => {
-  it('renders the complete POC section order and both brand logo variants', () => {
-    const { container } = render(<HomePage />)
+  it('renders the complete POC section order and header brand logo', () => {
+    const { container } = render(<MemoryRouter><App /></MemoryRouter>)
 
     expect(
       screen.getByRole('heading', { level: 1, name: 'Your care should feel personal.' }),
@@ -12,14 +13,10 @@ describe('HomePage', () => {
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content')
     expect(screen.getByRole('main')).toHaveAttribute('tabindex', '-1')
     const brandImages = screen.getAllByRole('img', { name: "Ro's Family Medicine" })
-    expect(brandImages).toHaveLength(2)
+    expect(brandImages).toHaveLength(1)
     expect(brandImages[0]).toHaveAttribute(
       'src',
       '/assets/logos/ros-family-medicine-logo-header.png',
-    )
-    expect(brandImages[1]).toHaveAttribute(
-      'src',
-      '/assets/logos/ros-family-medicine-logo.png',
     )
     expect(screen.getByRole('region', { name: 'Quick clinic information' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Care for real life.' })).toBeInTheDocument()
@@ -57,7 +54,7 @@ describe('HomePage', () => {
   })
 
   it('keeps primary and footer navigation synchronized with live page targets', () => {
-    const { container } = render(<HomePage />)
+    const { container } = render(<MemoryRouter><App /></MemoryRouter>)
     const primaryNavigation = screen.getByRole('navigation', { name: 'Primary navigation' })
     const footerNavigation = screen.getByRole('navigation', { name: 'Footer navigation' })
     const primaryLinks = within(primaryNavigation).getAllByRole('link')
@@ -65,21 +62,22 @@ describe('HomePage', () => {
 
     expect(primaryLinks.map((link) => link.textContent)).toEqual([
       'About',
-      'Services',
-      'Hours & location',
       'FAQ',
-      'Contact',
+      'Privacy',
       'Patient Portal',
     ])
-    expect(footerLinks.map((link) => link.textContent)).toEqual(
-      primaryLinks.map((link) => link.textContent),
-    )
+    expect(footerLinks.map((link) => link.textContent)).toEqual([
+      'About',
+      'FAQ',
+      'Privacy',
+      'Patient Portal',
+    ])
 
     for (const link of [...primaryLinks, ...footerLinks]) {
       const href = link.getAttribute('href')
 
-      if (href.startsWith('#')) {
-        expect(container.querySelector(href)).toBeInTheDocument()
+      if (href.startsWith('/#')) {
+        expect(container.querySelector(href.slice(1))).toBeInTheDocument()
       }
     }
 
@@ -90,10 +88,11 @@ describe('HomePage', () => {
       expect(link).toHaveAttribute('target', '_blank')
       expect(link).toHaveAttribute('rel', 'noopener noreferrer')
     })
+    expect(screen.getByText("© 2026 Ro's Family Medicine. All rights reserved.")).toBeInTheDocument()
   })
 
   it('does not retain Vite starter presentation', () => {
-    render(<HomePage />)
+    render(<MemoryRouter><App /></MemoryRouter>)
 
     expect(screen.queryByText('Vite + React')).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /count is/i })).not.toBeInTheDocument()

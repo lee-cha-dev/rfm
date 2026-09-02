@@ -11,15 +11,16 @@ import './Form.css'
  * @param {string} [props.ariaLabel] An accessible name when no visible heading labels the form.
  * @param {boolean} [props.noValidate] Whether feature-owned validation replaces browser messages.
  * @param {string} [props.className] An optional composition class.
+ * @param {import('react').Ref<HTMLFormElement>} [props.elementRef] An optional native-form ref.
  * @returns {import('react').JSX.Element} A native form.
  * @author Lee Charles
  * @since 20260902
  * @company Lazy Software
  */
-export function Form({ children, onSubmit, ariaLabel, noValidate = false, className = '' }) {
+export function Form({ children, onSubmit, ariaLabel, noValidate = false, elementRef, className = '' }) {
   const classes = ['form', className].filter(Boolean).join(' ')
 
-  return <form className={classes} onSubmit={onSubmit} aria-label={ariaLabel} noValidate={noValidate}>{children}</form>
+  return <form ref={elementRef} className={classes} onSubmit={onSubmit} aria-label={ariaLabel} noValidate={noValidate}>{children}</form>
 }
 
 /**

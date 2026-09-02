@@ -1,4 +1,4 @@
-import { Layout, Link, Section, Shell, Text } from './base/index.js'
+import { Layout, Link, RouteLink, Section, Shell, Text } from './base/index.js'
 import { useClinicHours } from '../hooks/useClinicHours.js'
 import { useMapDirections } from '../hooks/useMapDirections.js'
 import './QuickInformation.css'
@@ -16,7 +16,7 @@ import './QuickInformation.css'
  * @since 20260902
  * @company Lazy Software
  */
-function QuickInformation({ clinic, now, userAgent }) {
+function QuickInformation({ clinic, now, userAgent, hoursHref = '#hours' }) {
   const currentHours = useClinicHours(clinic.weeklyHours, now)
   const directionsHref = useMapDirections(clinic.contact.address.mapsQuery, userAgent)
 
@@ -24,7 +24,7 @@ function QuickInformation({ clinic, now, userAgent }) {
     <Section variant="flush" ariaLabel="Quick clinic information" className="quick-information">
       <Shell>
         <Layout className="quick-information__card">
-          <Link href="#hours" className="quick-information__hours">
+          <RouteLink to={hoursHref} className="quick-information__hours">
             <Layout>
               <Text as="span" variant="kicker" className="quick-information__kicker">
                 Our Current Hours
@@ -39,7 +39,7 @@ function QuickInformation({ clinic, now, userAgent }) {
             >
               {currentHours.status}
             </Text>
-          </Link>
+          </RouteLink>
           <Layout variant="row" className="quick-information__contact">
             <Link href={`tel:${clinic.contact.phone.href}`} className="quick-information__link">
               <Text as="span" variant="kicker" className="quick-information__kicker">Call</Text>

@@ -3,7 +3,7 @@ import {
   Heading,
   Image,
   Layout,
-  Link,
+  RouteLink,
   Section,
   Shell,
   Text,
@@ -21,7 +21,7 @@ import './AboutSection.css'
  * @since 20260902
  * @company Lazy Software
  */
-function AboutSection({ clinic }) {
+function AboutSection({ clinic, headingLevel = 2, showLink = true }) {
   const content = clinic.homeSections.about
 
   return (
@@ -43,11 +43,13 @@ function AboutSection({ clinic }) {
           </Layout>
           <Layout className="about-section__copy">
             <Text variant="eyebrow">{content.eyebrow}</Text>
-            <Heading level={2} id="about-heading">{content.heading}</Heading>
+            <Heading level={headingLevel} id="about-heading">{content.heading}</Heading>
             <Text variant="lede" className="about-section__lede">{content.lede}</Text>
             <Text>{content.body}</Text>
             <Text variant="quote" className="about-section__quote">{content.quote}</Text>
-            <Link href={content.link.href} variant="text">{content.link.label}</Link>
+            {showLink ? (
+              <RouteLink to={content.link.href} variant="text">{content.link.label}</RouteLink>
+            ) : null}
           </Layout>
         </Layout>
       </Shell>

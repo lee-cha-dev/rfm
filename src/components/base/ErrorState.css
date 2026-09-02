@@ -1,0 +1,15 @@
+.error-state {
+  min-height: min(70vh, 42rem);
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.error-state__shell {
+  width: min(46rem, 100%);
+}
+
+.error-state__actions {
+  justify-content: center;
+  margin-top: var(--space-xl);
+}
