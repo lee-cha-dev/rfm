@@ -7,6 +7,7 @@ import HoursSection from '../components/HoursSection.jsx'
 import InsuranceSection from '../components/InsuranceSection.jsx'
 import QuickInformation from '../components/QuickInformation.jsx'
 import ServicesSection from '../components/ServicesSection.jsx'
+import SiteFooter from '../components/SiteFooter.jsx'
 import SiteHeader from '../components/SiteHeader.jsx'
 import { CLINIC_CONFIG } from '../config/clinic.js'
 
@@ -33,6 +34,7 @@ function HomePage() {
         <FaqSection clinic={CLINIC_CONFIG} />
         <ContactSection clinic={CLINIC_CONFIG} />
       </Main>
+      <SiteFooter clinic={CLINIC_CONFIG} />
     </Page>
   )
 }

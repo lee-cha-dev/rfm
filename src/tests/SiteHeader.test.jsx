@@ -54,4 +54,19 @@ describe('SiteHeader', () => {
     expect(trigger).toHaveFocus()
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
   })
+
+  it('adds a readable surface after the transparent header leaves the hero top', () => {
+    const { container } = render(<SiteHeader clinic={CLINIC_CONFIG} />)
+    const header = container.querySelector('header')
+
+    expect(header).not.toHaveClass('site-header--scrolled')
+
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 24 })
+    fireEvent.scroll(window)
+    expect(header).toHaveClass('site-header--scrolled')
+
+    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 })
+    fireEvent.scroll(window)
+    expect(header).not.toHaveClass('site-header--scrolled')
+  })
 })

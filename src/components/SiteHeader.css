@@ -18,8 +18,18 @@
   position: sticky;
   top: 0;
   z-index: 20;
-  height: 0;
+  height: 88px;
+  margin-bottom: -88px;
   color: var(--color-white);
+  transition:
+    background-color var(--motion-standard) var(--ease-standard),
+    box-shadow var(--motion-standard) var(--ease-standard);
+}
+
+.site-header--scrolled {
+  background: rgba(43, 16, 59, 0.96);
+  box-shadow: 0 8px 24px rgba(19, 11, 22, 0.22);
+  backdrop-filter: blur(10px);
 }
 
 .site-header__nav {
@@ -157,6 +167,11 @@
 }
 
 @media (min-width: 980px) {
+  .site-header {
+    height: 102px;
+    margin-bottom: -102px;
+  }
+
   .site-header__nav {
     min-height: 102px;
   }

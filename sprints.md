@@ -244,7 +244,7 @@ App entry
 
 ## Sprint 6 — Footer, full-page integration, and responsive parity
 
-**Status:** Planned
+**Status:** Complete
 
 **Goal:** Assemble the complete page through the interface layer and close cross-section visual, navigation, and responsive gaps.
 
@@ -268,7 +268,13 @@ App entry
 
 ### Sprint retrospective
 
-Pending. On completion, record the viewport comparison results, cross-section fixes, architecture boundary violations found, technical debt accepted, and release blockers passed to Sprint 7.
+- **Outcomes:** Added the complete POC footer with the primary logo asset, six config-driven navigation destinations, responsive two-column link layout, and POC footer surface. `HomePage` now owns only the exact header, eight-section main sequence, and footer composition; feature state remains local to its owning hook or component.
+- **Navigation and integration:** Verified the skip link, five shared section fragments, home target, portal links, telephone links, two platform-aware directions links, and mobile-menu close/focus behavior. All rendered header and footer fragments resolve to live targets, external new-tab links retain `noopener noreferrer`, and the main landmark is programmatically focusable for skip navigation.
+- **Responsive comparison:** Compared the React page with the rendered POC at 375×812, 760×900, 1024×800, and 1440×900. The completed page has no horizontal overflow at any checked width, preserves the 620px, 760px, and 980px transitions, matches footer column/logo geometry, keeps mobile targets at 48–50px and footer links at 44px, and loads every visible image with the intended responsive crop. The React conversion also avoids the POC's four-pixel narrow-mobile overflow.
+- **Cross-section fixes:** Added shared anchor scroll margins, a readable scrolled-header surface without page-level state, and correct keyboard focus transfer from the skip link. Removed the base footer's premature visual treatment so feature CSS owns the rendered footer, and supplied the missing stable key for the service-group composition.
+- **Architecture and cleanup:** Added a scoped ESLint boundary that rejects native JSX in feature and interface components while leaving native markup in `components/base`. A feature-class and conversion-scaffolding review found no actionable dead selectors or runtime console output; the browser recorded no warnings or errors.
+- **Verification:** Lint and the production build are clean. The complete Vitest suite passes with 45 tests covering full-page order, both logo variants, synchronized footer/header navigation, live fragment targets, hardened external links, skip-focus behavior, sticky-header state, and all earlier section contracts.
+- **Accepted debt and Sprint 7 blockers:** The POC's phone, address, weekly hours, portal destination, new-patient guidance, clinical/operational copy, insurance claims, and `#` placeholders for the future practice and full-FAQ destinations remain unverified by design. Sprint 7 must complete the accessibility/content-metadata review and obtain owner confirmation before the home route is release-ready.
 
 ---
 

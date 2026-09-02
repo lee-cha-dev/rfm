@@ -22,7 +22,7 @@ import './ServicesSection.css'
 function ServicesSection({ clinic }) {
   const content = clinic.homeSections.services
   const groups = clinic.services.map((group) => (
-    <Layout className="services-section__group">
+    <Layout className="services-section__group" key={group.id}>
       <Heading level={3} className="services-section__label">{group.label}</Heading>
       <List
         items={group.items}

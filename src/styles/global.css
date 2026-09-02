@@ -26,6 +26,11 @@ body {
   min-height: 100vh;
 }
 
+main[id],
+main [id] {
+  scroll-margin-top: 7rem;
+}
+
 img {
   display: block;
   max-width: 100%;

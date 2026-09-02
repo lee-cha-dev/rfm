@@ -3,6 +3,7 @@
 }
 
 .contact-section__wrap {
+
   overflow: hidden;
   background: var(--color-white);
   border: var(--border-standard);

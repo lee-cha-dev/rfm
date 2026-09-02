@@ -59,5 +59,5 @@ export function Shell({ children, className = '' }) {
 export function Main({ children, id = 'main-content', className = '' }) {
   const classes = ['layout__main', className].filter(Boolean).join(' ')
 
-  return <main className={classes} id={id}>{children}</main>
+  return <main className={classes} id={id} tabIndex={-1}>{children}</main>
 }

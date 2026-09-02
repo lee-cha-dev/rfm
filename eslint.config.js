@@ -30,4 +30,16 @@ export default [
       ],
     },
   },
+  {
+    files: ['src/components/*.jsx', 'src/interfaces/*.jsx', 'src/App.jsx'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "JSXOpeningElement > JSXIdentifier[name=/^[a-z]/]",
+          message: 'Feature and interface components must compose native markup through components/base.',
+        },
+      ],
+    },
+  },
 ]

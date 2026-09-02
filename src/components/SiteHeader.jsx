@@ -8,6 +8,7 @@ import {
   Text,
 } from './base/index.js'
 import { useMobileNavigation } from '../hooks/useMobileNavigation.js'
+import { useStickyHeader } from '../hooks/useStickyHeader.js'
 import './SiteHeader.css'
 
 /**
@@ -23,6 +24,7 @@ import './SiteHeader.css'
  * @company Lazy Software
  */
 function SiteHeader({ clinic }) {
+  const isScrolled = useStickyHeader()
   const {
     isOpen,
     buttonRef,
@@ -37,7 +39,7 @@ function SiteHeader({ clinic }) {
       <Link href="#main-content" className="site-header__skip-link">
         Skip to main content
       </Link>
-      <Header className="site-header">
+      <Header className={`site-header${isScrolled ? ' site-header--scrolled' : ''}`}>
         <Shell className="site-header__nav">
           <Link href="#top" ariaLabel={`${clinic.brand.name} home`} className="site-header__brand">
             <Image
