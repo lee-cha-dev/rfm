@@ -36,6 +36,25 @@ Use `npm ci` for a lockfile-exact clean install. `npm run test:routes` is the
 focused route, metadata, and accessibility smoke suite; `npm run verify` runs
 the complete lint, test, and production-build gate.
 
+## Temporary GitHub Pages deployment
+
+The workflow in `.github/workflows/deploy-pages.yml` runs the lint, test, and
+production-build gates on Ubuntu, then deploys `dist` to GitHub Pages. It runs
+after every push to `master` and can also be started manually from the Actions
+tab. Vite receives the Pages base path from GitHub, so the same workflow works
+with the default project URL without hard-coding the repository owner or name.
+
+Before the first deployment, open the GitHub repository's **Settings > Pages**
+screen and select **GitHub Actions** under **Build and deployment > Source**.
+Then push `master`, or run **CI and deploy to GitHub Pages** from the Actions
+tab. The completed deployment job displays the temporary site URL; for this
+repository it is expected to be `https://lee-cha-dev.github.io/rfm/`.
+
+The workflow copies the built entry point to `404.html` because GitHub Pages
+does not support SPA rewrite rules. This lets bookmarked and refreshed routes
+such as `/rfm/about` boot React Router correctly. No custom domain, `CNAME`,
+server, secret, or self-hosted Ubuntu instance is required.
+
 ## Source architecture
 
 Dependencies flow inward from composition to native markup:

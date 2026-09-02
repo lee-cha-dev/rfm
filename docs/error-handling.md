@@ -18,5 +18,8 @@ their local owner if those capabilities are introduced later.
 Vite development and preview servers provide history fallback to `index.html`.
 The copied `public/_redirects` rule preserves the same behavior on compatible
 static deployment targets by rewriting all direct route requests to the built
-application entry point. A different eventual host must receive the equivalent
-SPA rewrite as part of its separately authorized deployment workflow.
+application entry point. The temporary GitHub Pages workflow instead copies the
+built entry point to `404.html`, allowing direct routes to boot React Router on
+a host without configurable rewrites. Any other eventual host must receive the
+equivalent SPA fallback as part of its separately authorized deployment
+workflow.
