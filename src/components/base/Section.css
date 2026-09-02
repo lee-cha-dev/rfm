@@ -1,0 +1,9 @@
+.section--padded {
+  padding-block: var(--space-3xl);
+}
+
+@media (min-width: 760px) {
+  .section--padded {
+    padding-block: var(--space-4xl);
+  }
+}

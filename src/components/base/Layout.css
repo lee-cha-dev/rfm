@@ -1,0 +1,30 @@
+.layout--row,
+.layout--actions {
+  display: flex;
+  align-items: center;
+}
+
+.layout--grid {
+  display: grid;
+}
+
+.layout--stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout--actions {
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.layout__shell {
+  width: min(calc(100% - 2rem), var(--content-max-width));
+  margin-inline: auto;
+}
+
+@media (min-width: 760px) {
+  .layout__shell {
+    width: min(calc(100% - 4rem), var(--content-max-width));
+  }
+}

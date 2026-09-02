@@ -1,0 +1,19 @@
+.heading {
+  margin: 0;
+  color: var(--color-purple-900);
+  font-family: var(--font-family-serif);
+  font-weight: 500;
+}
+
+.heading--display {
+  max-width: 12ch;
+  font-size: var(--font-size-display);
+  letter-spacing: var(--letter-spacing-display);
+  line-height: var(--line-height-display);
+}
+
+.heading--section {
+  font-size: var(--font-size-heading);
+  letter-spacing: var(--letter-spacing-display);
+  line-height: var(--line-height-heading);
+}

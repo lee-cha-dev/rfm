@@ -1,0 +1,14 @@
+.image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.image--content {
+  width: 100%;
+  object-fit: cover;
+}
+
+.image--brand {
+  object-fit: contain;
+}

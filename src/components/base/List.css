@@ -1,0 +1,20 @@
+.list {
+  margin: 0;
+  padding: 0;
+}
+
+.list--plain {
+  padding-left: 1.25rem;
+}
+
+.list--matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+}
+
+@media (min-width: 620px) {
+  .list--matrix {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,35 @@
+.button {
+  min-height: 2.9rem;
+  padding: 0.72rem 1.15rem;
+  color: var(--color-white);
+  background: var(--color-purple-700);
+  border: 1px solid var(--color-purple-700);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+  transition:
+    background-color var(--motion-standard) var(--ease-standard),
+    border-color var(--motion-standard) var(--ease-standard),
+    transform var(--motion-standard) var(--ease-standard);
+}
+
+.button--ghost {
+  color: var(--color-purple-900);
+  background: transparent;
+}
+
+.button--menu {
+  width: 3rem;
+  padding-inline: var(--space-sm);
+}
+
+.button:hover:not(:disabled) {
+  background: var(--color-purple-800);
+  border-color: var(--color-purple-800);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}

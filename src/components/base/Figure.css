@@ -1,0 +1,9 @@
+.figure {
+  margin: 0;
+}
+
+.figure__caption {
+  margin-top: var(--space-xs);
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+}

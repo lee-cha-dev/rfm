@@ -1,0 +1,14 @@
+.navigation {
+  display: flex;
+  gap: var(--space-lg);
+}
+
+.navigation--inline {
+  align-items: center;
+}
+
+.navigation--panel,
+.navigation--footer {
+  align-items: flex-start;
+  flex-direction: column;
+}

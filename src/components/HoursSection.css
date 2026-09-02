@@ -1,0 +1,110 @@
+.hours-section {
+  position: relative;
+  overflow: hidden;
+  color: var(--color-white);
+  background:
+    radial-gradient(circle at 98% 4%, rgba(154, 61, 217, 0.36), transparent 30rem),
+    linear-gradient(135deg, var(--color-purple-900), #1e0d29 70%);
+}
+
+.hours-section::before {
+  position: absolute;
+  top: 18%;
+  right: -230px;
+  width: 420px;
+  height: 420px;
+  content: "";
+  border: 1px solid rgba(208, 179, 102, 0.4);
+  border-radius: var(--radius-round);
+  pointer-events: none;
+}
+
+.hours-section__grid {
+  position: relative;
+  gap: var(--space-2xl);
+}
+
+.hours-section .text--eyebrow {
+  color: var(--color-gold-400);
+}
+
+.hours-section .heading {
+  max-width: 9ch;
+  color: var(--color-white);
+}
+
+.hours-section__body {
+  max-width: 34rem;
+  margin-top: 1.4rem;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.hours-section__address {
+  max-width: 30rem;
+  margin-top: var(--space-md);
+  color: #f2e2ac;
+  font-weight: 700;
+}
+
+.hours-section__actions {
+  margin-top: 1.4rem;
+}
+
+.hours-section__actions .link--primary {
+  color: var(--color-purple-900);
+  background: var(--color-yellow-300);
+  border-color: var(--color-yellow-300);
+}
+
+.hours-section__actions .link--primary:hover {
+  color: var(--color-purple-900);
+  background: var(--color-gold-400);
+  border-color: var(--color-gold-400);
+}
+
+.hours-section__actions .link--ghost {
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.64);
+}
+
+.hours-section__actions .link--ghost:hover {
+  color: var(--color-yellow-300);
+  border-color: var(--color-yellow-300);
+}
+
+.hours-section__schedule {
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.hours-section__row {
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding-block: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.hours-section__day {
+  margin: 0;
+  font-family: var(--font-family-serif);
+  font-size: 1.18rem;
+  font-weight: 500;
+}
+
+.hours-section__time {
+  margin: 0;
+  color: #f2e2ac;
+  text-align: right;
+}
+
+.hours-section__note {
+  margin-top: var(--space-md);
+  color: rgba(255, 255, 255, 0.58);
+}
+
+@media (min-width: 760px) {
+  .hours-section__grid {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+}
