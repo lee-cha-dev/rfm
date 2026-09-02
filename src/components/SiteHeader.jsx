@@ -28,7 +28,7 @@ import './SiteHeader.css'
  * @company Lazy Software
  */
 function SiteHeader({ clinic, solid = false }) {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const isScrolled = useStickyHeader()
   const {
     isOpen,
@@ -37,7 +37,7 @@ function SiteHeader({ clinic, solid = false }) {
     toggleMenu,
     closeMenu,
     handleKeyDown,
-  } = useMobileNavigation()
+  } = useMobileNavigation(`${pathname}${hash}`)
 
   return (
     <>

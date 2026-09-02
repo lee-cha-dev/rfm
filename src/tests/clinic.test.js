@@ -16,7 +16,7 @@ describe('clinic configuration', () => {
     expect(CLINIC_CONFIG.services).toHaveLength(3)
     expect(CLINIC_CONFIG.services.flatMap((group) => group.items)).toHaveLength(9)
     expect(CLINIC_CONFIG.insuranceCarriers).toHaveLength(8)
-    expect(CLINIC_CONFIG.faqs).toHaveLength(4)
+    expect(CLINIC_CONFIG.faqs).toHaveLength(6)
     expect(CLINIC_CONFIG.assets.logos.header.src).toMatch(/^\/assets\/logos\//)
     expect(CLINIC_CONFIG.navigation.portal).toMatchObject({
       href: 'https://www.tebra.com/',
@@ -29,6 +29,79 @@ describe('clinic configuration', () => {
     VERIFICATION_FIELDS.forEach((field) => {
       expect(isClinicContentConfirmed(CLINIC_CONFIG, field)).toBe(false)
     })
+  })
+
+  it('preserves the wording and facts excluded from the Sprint 11 copy pass', () => {
+    expect(CLINIC_CONFIG.brand.tagline).toEqual([
+      'Your Health.',
+      'Your Story.',
+      'Our Focus.',
+    ])
+    expect(CLINIC_CONFIG.homeSections.insurance).toEqual({
+      eyebrow: 'Insurances Accepted',
+      heading: 'We take most major insurance carriers.',
+      lede: "Don't see yours? Call the office and we'll verify your coverage before you book.",
+      matrixLabel: 'Accepted Insurances',
+      matrixNote: 'Coverage varies by plan',
+    })
+    expect(CLINIC_CONFIG.insuranceCarriers).toEqual([
+      'Aetna',
+      'Cigna',
+      'Humana',
+      'Medicare',
+      'Medicaid',
+      'Centene Plans',
+      'UnitedHealthcare',
+      'Blue Cross Blue Shield',
+    ])
+    expect(CLINIC_CONFIG.services).toEqual([
+      {
+        id: 'preventive-care',
+        label: 'Preventive care',
+        items: [
+          'Annual physicals & wellness visits',
+          'Immunizations & vaccines',
+          'Preventive screenings & lab work',
+        ],
+      },
+      {
+        id: 'everyday-care',
+        label: 'Everyday care',
+        items: [
+          'Sick visits & minor injuries',
+          'Chronic condition management',
+          'School, sports, work, and DOT physicals',
+        ],
+      },
+      {
+        id: 'family-care',
+        label: 'Family care',
+        items: ["Women’s health", "Men’s health", 'Pediatric & adolescent care'],
+      },
+    ])
+    expect(CLINIC_CONFIG.homeSections.hours).toMatchObject({
+      eyebrow: 'Hours & location',
+      scheduleLabel: 'Clinic hours',
+      scheduleNote: 'Hours are subject to change.',
+      directionsLabel: 'Get directions',
+      contactLabel: 'Contact clinic',
+    })
+    expect(CLINIC_CONFIG.weeklyHours).toEqual([
+      { dayIndex: 0, day: 'Sunday', hours: 'Closed' },
+      { dayIndex: 1, day: 'Monday', hours: '8:00 AM \u2014 5:00 PM' },
+      { dayIndex: 2, day: 'Tuesday', hours: '8:00 AM \u2014 5:00 PM' },
+      { dayIndex: 3, day: 'Wednesday', hours: '8:00 AM \u2014 5:00 PM' },
+      { dayIndex: 4, day: 'Thursday', hours: '8:00 AM \u2014 5:00 PM' },
+      { dayIndex: 5, day: 'Friday', hours: '8:00 AM \u2014 5:00 PM' },
+      { dayIndex: 6, day: 'Saturday', hours: 'Closed' },
+    ])
+    expect(CLINIC_CONFIG.contact.address).toEqual({
+      display: "1898 Hunter's Ridge, Fayetteville, AR 72701",
+      mapsQuery: "1898 Hunter's Ridge, Fayetteville, AR 72701",
+    })
+    expect(CLINIC_CONFIG.homeSections.about.link.label).toBe('Meet the practice →')
+    expect(CLINIC_CONFIG.homeSections.faq.link.label).toBe('View all patient questions →')
+    expect(CLINIC_CONFIG.homeSections.contact.submitLabel).toBe('Send message')
   })
 
   it('reports malformed fields and returns safe defaults with a development warning', () => {

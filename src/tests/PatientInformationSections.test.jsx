@@ -26,7 +26,7 @@ describe('Sprint 5 patient-information sections', () => {
 
     expect(screen.getByRole('link', { name: 'Get directions' })).toHaveAttribute(
       'href',
-      'https://maps.apple.com/?daddr=18%20Chesapeake%20Drive%2C%20Austin%2C%20AR%2072007',
+      "https://maps.apple.com/?daddr=1898%20Hunter's%20Ridge%2C%20Fayetteville%2C%20AR%2072701",
     )
     expect(screen.getByRole('link', { name: 'Contact clinic' })).toHaveAttribute('href', '/#contact')
   })
@@ -34,7 +34,7 @@ describe('Sprint 5 patient-information sections', () => {
   it('uses native keyboard-operable disclosure semantics for the home preview', () => {
     render(<MemoryRouter><FaqSection clinic={CLINIC_CONFIG} /></MemoryRouter>)
 
-    CLINIC_CONFIG.faqs.slice(0, 2).forEach(({ question, answer }) => {
+    CLINIC_CONFIG.faqs.slice(0, 3).forEach(({ question, answer }) => {
       const summary = screen.getByText(question)
       const disclosure = summary.closest('details')
 
@@ -45,7 +45,7 @@ describe('Sprint 5 patient-information sections', () => {
       expect(disclosure).toHaveAttribute('open')
       expect(within(disclosure).getByText(answer)).toBeInTheDocument()
     })
-    expect(screen.queryByText(CLINIC_CONFIG.faqs[2].question)).not.toBeInTheDocument()
+    expect(screen.queryByText(CLINIC_CONFIG.faqs[3].question)).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'View all patient questions →' })).toHaveAttribute(
       'href',
       '/faq',

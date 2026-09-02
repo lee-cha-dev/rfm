@@ -4,6 +4,7 @@ import { afterEach, beforeEach, vi } from 'vitest'
 
 beforeEach(() => {
   window.scrollTo = vi.fn()
+  window.Element.prototype.scrollIntoView = vi.fn()
   window.requestAnimationFrame = vi.fn((callback) => {
     callback()
     return 1

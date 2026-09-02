@@ -2,8 +2,8 @@ import { Disclosure, Heading, Layout, RouteLink, Section, Shell, Text } from './
 import './FaqSection.css'
 
 /**
- * Renders the four configured patient questions with native disclosure
- * semantics and no custom interaction state.
+ * Renders a concise preview of the configured patient questions with native
+ * disclosure semantics and no custom interaction state.
  *
  * @param {object} props The FAQ-section properties.
  * @param {Readonly<import('../config/clinic.js').ClinicConfig>} props.clinic The validated clinic configuration.
@@ -12,7 +12,7 @@ import './FaqSection.css'
  * @since 20260902
  * @company Lazy Software
  */
-function FaqSection({ clinic, limit = 2 }) {
+function FaqSection({ clinic, limit = 3 }) {
   const content = clinic.homeSections.faq
   const previewFaqs = clinic.faqs.slice(0, limit)
 

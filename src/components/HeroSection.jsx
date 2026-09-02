@@ -33,12 +33,12 @@ function HeroSection({ clinic }) {
       <Shell className="hero__shell">
         <Layout variant="grid" className="hero__grid">
           <Layout className="hero__copy">
-            <Text variant="eyebrow" className="hero__eyebrow">Family Medicine Clinic</Text>
+            <Text variant="eyebrow" className="hero__eyebrow">Primary care in Fayetteville</Text>
             <Heading level={1} variant="display" id="hero-title" className="hero__title">
-              Your care should feel <Text as="em" className="hero__emphasis">personal.</Text>
+              Care that starts with a real <Text as="em" className="hero__emphasis">conversation.</Text>
             </Heading>
             <Text variant="lede" className="hero__lede">
-              Primary care built around conversation, continuity, and the person in front of us—not a rushed checklist.
+              We make room for the whole story, whether you are here for a yearly physical, a sudden cough, school paperwork, or help managing a condition over time.
             </Text>
             <Layout variant="actions" className="hero__actions">
               <Link href="#contact" variant="primary" className="hero__primary-action">

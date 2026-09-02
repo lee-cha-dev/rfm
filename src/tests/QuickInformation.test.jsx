@@ -22,9 +22,9 @@ describe('QuickInformation', () => {
       'href',
       `tel:${CLINIC_CONFIG.contact.phone.href}`,
     )
-    expect(screen.getByRole('link', { name: /18 Chesapeake Drive/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: /1898 Hunter's Ridge,/i })).toHaveAttribute(
       'href',
-      'https://maps.apple.com/?daddr=18%20Chesapeake%20Drive%2C%20Austin%2C%20AR%2072007',
+      "https://maps.apple.com/?daddr=1898%20Hunter's%20Ridge%2C%20Fayetteville%2C%20AR%2072701",
     )
   })
 })

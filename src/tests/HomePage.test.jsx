@@ -8,7 +8,7 @@ describe('HomePage', () => {
     const { container } = render(<MemoryRouter><App /></MemoryRouter>)
 
     expect(
-      screen.getByRole('heading', { level: 1, name: 'Your care should feel personal.' }),
+      screen.getByRole('heading', { level: 1, name: 'Care that starts with a real conversation.' }),
     ).toBeInTheDocument()
     expect(screen.getByRole('main')).toHaveAttribute('id', 'main-content')
     expect(screen.getByRole('main')).toHaveAttribute('tabindex', '-1')
@@ -19,10 +19,10 @@ describe('HomePage', () => {
       '/assets/logos/ros-family-medicine-logo-header.png',
     )
     expect(screen.getByRole('region', { name: 'Quick clinic information' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Care for real life.' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Care through every stage.' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'We take most major insurance carriers.' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Come see us.' })).toBeInTheDocument()
-    expect(screen.getByRole('region', { name: 'Questions should be easy to answer.' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'Plan your visit.' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'A few things patients ask us.' })).toBeInTheDocument()
     expect(screen.getByRole('region', { name: 'Need to reach the clinic?' })).toBeInTheDocument()
     expect(screen.getByRole('contentinfo')).toBeInTheDocument()
     expect(

@@ -56,6 +56,21 @@ describe('SiteHeader', () => {
     expect(trigger).toHaveAttribute('aria-expanded', 'false')
   })
 
+  it('closes when browser history changes the active location', () => {
+    render(
+      <MemoryRouter initialEntries={['/about']}>
+        <SiteHeader clinic={CLINIC_CONFIG} />
+      </MemoryRouter>,
+    )
+    const trigger = screen.getByRole('button', { name: 'Open menu' })
+    fireEvent.click(trigger)
+
+    fireEvent.click(screen.getByRole('link', { name: "Ro's Family Medicine home" }))
+
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    expect(document.getElementById('mobile-navigation')).toHaveAttribute('hidden')
+  })
+
   it('adds a readable surface after the transparent header leaves the hero top', () => {
     const { container } = render(
       <MemoryRouter><SiteHeader clinic={CLINIC_CONFIG} /></MemoryRouter>,

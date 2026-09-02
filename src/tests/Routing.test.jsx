@@ -35,6 +35,23 @@ describe('application routing', () => {
       'content',
       route.description,
     )
+    expect(document.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'index, follow')
+    expect(document.querySelector('meta[property="og:title"]')).toHaveAttribute(
+      'content',
+      `${route.title} | Ro's Family Medicine`,
+    )
+    expect(document.querySelector('meta[property="og:description"]')).toHaveAttribute(
+      'content',
+      route.description,
+    )
+    expect(document.querySelector('meta[name="twitter:title"]')).toHaveAttribute(
+      'content',
+      `${route.title} | Ro's Family Medicine`,
+    )
+    expect(document.querySelector('meta[name="twitter:description"]')).toHaveAttribute(
+      'content',
+      route.description,
+    )
     expect(screen.getByRole('banner')).toBeInTheDocument()
     expect(screen.getByRole('contentinfo')).toBeInTheDocument()
   })
@@ -69,6 +86,25 @@ describe('application routing', () => {
     expect(screen.getByRole('main')).toHaveFocus()
   })
 
+  it('preserves native initial focus so the skip link remains first in tab order', () => {
+    renderRoute('/')
+
+    expect(screen.getByRole('main')).not.toHaveFocus()
+    expect(window.scrollTo).not.toHaveBeenCalled()
+  })
+
+  it('scrolls recovery fragment links to their rendered Home target', () => {
+    renderRoute('/missing')
+
+    fireEvent.click(screen.getByRole('link', { name: 'Contact' }))
+
+    expect(document.getElementById('contact').scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'auto',
+      block: 'start',
+    })
+    expect(screen.getByRole('main')).toHaveFocus()
+  })
+
   it('renders an intentional wildcard 404 inside the shared layout', () => {
     renderRoute('/not-a-declared-route')
 
@@ -77,6 +113,7 @@ describe('application routing', () => {
     expect(screen.getByRole('banner')).toBeInTheDocument()
     expect(screen.getByRole('contentinfo')).toBeInTheDocument()
     expect(document.title).toBe("Page Not Found | Ro's Family Medicine")
+    expect(document.querySelector('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow')
   })
 
   it('renders all categorized FAQs from shared configuration', () => {
@@ -93,12 +130,18 @@ describe('application routing', () => {
   it('renders the About roster from employee configuration without repeating the home story', () => {
     renderRoute('/about')
 
-    const employee = EMPLOYEES[0]
-
     expect(screen.getByRole('heading', { level: 2, name: 'Meet the practice' })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { level: 3, name: employee.name })).toBeInTheDocument()
-    expect(screen.getByText(employee.role)).toBeInTheDocument()
-    expect(screen.getByRole('img', { name: employee.photoAlt })).toHaveAttribute('src', employee.photo.src)
+    const employeeHeadings = screen.getAllByRole('heading', { level: 3 })
+    expect(employeeHeadings).toHaveLength(EMPLOYEES.length)
+    expect(new Set(EMPLOYEES.map(({ id }) => id)).size).toBe(EMPLOYEES.length)
+
+    EMPLOYEES.forEach((employee, index) => {
+      const employeeRow = employeeHeadings[index].closest('.practice-team__employee')
+
+      expect(employeeHeadings[index]).toHaveTextContent(employee.name)
+      expect(within(employeeRow).getByText(employee.role)).toBeInTheDocument()
+      expect(within(employeeRow).getByRole('img', { name: employee.photoAlt })).toHaveAttribute('src', employee.photo.src)
+    })
     expect(screen.queryByRole('heading', {
       name: CLINIC_CONFIG.homeSections.about.heading,
     })).not.toBeInTheDocument()

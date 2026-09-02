@@ -304,9 +304,9 @@ App entry
 ### Sprint retrospective
 
 - **Delivered:** Added a two-color cross-surface focus indicator, first-invalid-field focus for the local contact form, explicit roles for labeled layout groups, favicon/theme/social metadata structure, a validated ten-field SME dependency inventory, and the home-route accessibility/reuse baseline document.
-- **Decisions:** Preserved every rendered POC text and placeholder exactly as requested; Open Graph/Twitter tags mirror the existing title/description, the inventory date is not approval, and Sprint 11 is the single final SME content and placeholder pass.
+- **Decisions:** Preserved every rendered POC text and placeholder exactly as requested; Open Graph/Twitter tags mirror the existing title/description, the inventory date is not approval, and later work separates editorial revision from SME approval.
 - **Validation:** An isolated `npm ci` installed 287 packages with zero reported vulnerabilities; lint, all 49 tests, and the production build passed. Production-browser checks at 375×812, 760×900, 1024×800, and 1440×900 found zero horizontal overflow, correct 980px navigation switching, no console issues, working menu/skip/disclosure/form focus paths, and the expected focus-ring rendering.
-- **Carryover:** Sprint 8 may reuse the documented base/section contracts and Sprint 9 may establish routed-page structure; final copy, clinic facts, privacy/legal language, metadata wording, canonical/social image decisions, and destination replacement remain exclusively in Sprint 11.
+- **Carryover:** Sprint 8 may reuse the documented base/section contracts and Sprint 9 may establish routed-page structure. Sprint 11 owns the home-page editorial pass; Sprint 12 owns clinic facts, privacy/legal language, final metadata, destination replacement, and approval.
 - **Risks/data needed:** Phone, address, hours, carriers, new-patient status, generic Tebra destination, directions behavior, clinical claims, privacy language, and `#` destinations remain deliberately unconfirmed POC values and block public release until SME sign-off.
 
 ---
@@ -345,7 +345,7 @@ App entry
 - **Failure design:** Added the documented root `ErrorBoundary`, a location-aware reset adapter, a safe `ErrorPage`, and base `ErrorState`/`RouteLink` primitives. Retry clears local boundary state; Home/Contact actions reset before recovery navigation; location changes also release a trapped failure. The wildcard 404 remains a normal route inside the shared shell.
 - **Normalization:** `resolveErrorDisplay` accepts only catalog-supported safe integers supplied directly or through own `status`, `statusCode`, or `code` properties. Unknown, symbolic, string, inherited, throwing-accessor, and malformed inputs resolve to `ERROR_CODES.default`; raw errors and component stacks are never rendered.
 - **Fallback and verification:** Documented boundary exclusions in `docs/error-handling.md`; Vite development/preview history fallback and the shipped `public/_redirects` SPA rewrite cover direct requests. `npm run lint`, 63 tests across 14 files, and `npm run build` pass. Preview smoke requests to all six declared paths plus an unknown path returned the application entry with HTTP 200.
-- **Sprint 9 carryover:** Replace the five neutral placeholders with dedicated routed page compositions and approved structures. Keep final clinic facts, clinical/operational copy, privacy/legal language, metadata wording, and destination replacement in the existing Sprint 11 approval workflow.
+- **Sprint 9 carryover:** Replace the five neutral placeholders with dedicated routed page compositions and approved structures. Keep the home-page editorial pass in Sprint 11 and final clinic facts, clinical/operational approval, privacy/legal language, metadata wording, and destination replacement in Sprint 12.
 
 ---
 
@@ -384,13 +384,13 @@ App entry
 - **Decisions:** Dedicated routes share one interior masthead; the home FAQ shows two of four shared records, the header contains page routes only, and the footer keeps useful Home deep links. Privacy links to Tebra's platform policy, portal terms, security notice, Business Associate Agreement, and HHS patient guidance.
 - **Validation:** Route tests cover direct supported paths, removed paths, unique titles/descriptions, focus and scroll reset, active desktop/mobile/footer links, FAQ categories, external privacy sources, and wildcard recovery; final command and browser results are recorded after the staff content is supplied.
 - **Carryover:** Sprint 10 retains browser-level responsive, back/forward, full accessibility, metadata strategy, clean-install, and production smoke validation.
-- **Risks/data needed:** Staff names, roles, biographies, and portraits have not been supplied. Phone, address, hours, services, insurers, portal, patient guidance, route descriptions, and the clinic's formal Notice of Privacy Practices also remain unapproved; Sprint 11 still owns SME/legal sign-off.
+- **Risks/data needed:** Staff names, roles, biographies, and portraits have not been supplied. Phone, address, hours, services, insurers, portal, patient guidance, route descriptions, and the clinic's formal Notice of Privacy Practices also remain unapproved; Sprint 12 owns SME/legal sign-off.
 
 ---
 
 ## Sprint 10 — Multi-page validation and release readiness
 
-**Status:** Planned
+**Status:** Complete
 
 **Goal:** Validate the complete routed marketing application and leave a production-ready local artifact with technical and content readiness clearly separated.
 
@@ -414,38 +414,79 @@ App entry
 
 ### Sprint retrospective
 
-Pending. On completion, record final multi-page validation evidence, confirmed and unresolved clinic/legal facts, accepted deviations, release readiness, and recommended post-launch follow-up.
+- **Delivered:** Hardened route metadata and 404 indexing, fixed fragment/history focus and mobile-menu state, added cross-route accessibility coverage, contributor workflows, and a release checklist.
+- **Decisions:** Supported routes use route-specific social metadata and `index, follow`; wildcard routes use `noindex, nofollow`; canonical and `og:url` wait for an approved production origin. The requested duplicate provider example remains with a unique internal ID.
+- **Validation:** A lockfile-clean install, lint, 75 automated tests, 23 focused route/accessibility tests, and the production build pass. Production-preview checks at 390 x 844, 768 x 1024, and 1440 x 900 covered direct routes, 404s, keyboard interactions, form errors, fragments, Back/Forward, assets, overflow, metadata, focus, and console output.
+- **Carryover:** Sprint 11 handles the home-page copy revision. Sprint 12 retains clinic/legal approval, staff, privacy, canonical/social-card, favicon, and final indexing approval; hosting remains a separately authorized workflow.
+- **Risks/data needed:** Public contact/operational facts, external destinations, claims, privacy notice, production origin, and final staff approval remain unresolved and block public release, though the local artifact is technically release-ready.
 
 ---
 
-## Sprint 11 — Final SME content and placeholder approval
+## Sprint 11: Home-page copy refinement and revision
 
-**Status:** Planned
+**Status:** Complete
 
-**Goal:** Complete the final clinic-owner and subject-matter-expert review after all page structures are stable, then replace prototype copy and placeholder information in one coordinated content pass.
+**Goal:** Replace the home page's editorial notes and stiff prototype wording with patient-facing copy, while leaving clinic facts and protected labels untouched until SME review.
 
 ### Work
 
-- Have the clinic owner or designated SME approve final marketing, clinical, operational, new-patient, insurance/payment, contact, urgent-care, and privacy language for every route.
-- Confirm the public phone, full address, weekly hours, insurance carriers, new-patient status, patient portal URL, directions behavior, privacy/legal content, and every internal or external destination.
-- Replace the inventoried POC placeholders only with confirmed values in the shared clinic configuration so home and routed pages cannot drift.
-- Replace all `#` prototype destinations with approved routes or external URLs and remove any intentionally unused action.
-- Approve final document titles, descriptions, canonical URL, social card copy/image, indexing expectations, and favicon/brand treatment.
-- Run a content-focused review across every route for consistency, plain language, spelling, punctuation, dates, phone/address formatting, link intent, and unsupported claims.
-- Repeat accessibility, responsive, route, clean-install, production-build, and smoke checks after the content changes.
-- Produce the final release sign-off record listing the approving SME, approval date, intentionally unresolved fields, and any launch restrictions.
+- Rewrite the home hero and practice-story copy in plain, conversational language grounded in Fayetteville and the services already listed on the page.
+- Revise the introduction to “How we care for you” without changing any care category or service name.
+- Revise only the hours/location heading and supporting paragraph. Preserve its eyebrow, address, schedule labels, days, hours, note, and action labels exactly.
+- Leave the complete insurance section unchanged, including its eyebrow, heading, lede, matrix labels, note, and carrier table.
+- Rewrite “Before your visit,” expand the shared FAQ from four questions to six, and show three questions on the home page. Keep all six available on `/faq`.
+- Revise only the paragraph beneath “Need to reach the clinic?” Keep the phone, portal link, form, field labels, choices, warnings, validation messages, and submit text unchanged.
+- Preserve every button and link label, plus “Your Health. Your Story. Our Focus.” exactly as supplied.
+- Keep every release-sensitive verification field `unresolved`; this editorial pass does not approve clinic facts or clinical claims.
 
 ### Acceptance criteria
 
-- No prototype instruction, placeholder contact detail, generic portal destination, `#` action, or unapproved clinic/legal claim remains in public UI or metadata.
-- All shared clinic facts render from the single approved configuration and are consistent across routes.
-- Privacy and patient-information content has explicit owner/legal approval appropriate to its use.
-- Build, lint, automated tests, accessibility checks, and route smoke tests pass after the approved content is applied.
-- The release checklist records SME approval and any intentionally unresolved launch blocker.
+- No editable home-page section speaks to the designer or describes how the page itself is laid out.
+- Protected wording and data remain byte-for-byte unchanged.
+- The home page exposes three native FAQ disclosures and `/faq` exposes all six shared records exactly once.
+- Draft answers avoid invented clinic timing, availability, or workflow promises and remain clearly subject to Sprint 12 review.
+- Lint, automated tests, and the production build pass after the copy changes.
 
 ### Sprint retrospective
 
-Pending. On completion, record approved content sources, replaced placeholders, metadata/canonical decisions, reviewer and approval date, validation evidence, unresolved launch blockers, and final release status.
+- **Delivered:** Replaced the public home page's design-note language in the hero, practice story, care introduction, hours introduction, visit guidance, and contact introduction. Expanded the shared FAQ from four questions to six and increased the home preview from two questions to three. First-visit and test-result guidance draws from MedlinePlus, AHRQ, and Joint Commission patient resources.
+- **Decisions:** Kept every button and link label unchanged. The brand saying, care categories, service names, complete insurance block, address, days, hours, schedule labels, and form copy are protected by an explicit regression test. New public copy uses no em dashes; the protected schedule keeps its supplied hour-range punctuation.
+- **Validation:** `npm run verify` passed lint, 76 automated tests in 14 files, and the Vite production build. The protected-copy test and FAQ rendering tests pass with six shared records, three on the home page, and all six on `/faq`.
+- **Carryover:** All ten verification fields remain `unresolved`. Sprint 12 must confirm the new-patient, portal, refill, test-result, coverage, holiday-hours, clinical, privacy, metadata, staff, and destination details before release.
+- **Risks/data needed:** The refill workflow, result-delivery process, new-patient availability, coverage language, portal destination, holiday guidance, and all clinic-specific promises remain drafts until an SME supplies corrections and approval.
+
+---
+
+## Sprint 12: SME consultation, wording validation, and final corrections
+
+**Status:** Planned
+
+**Goal:** Put the revised page in front of the clinic owner or designated subject-matter expert, correct it against real practice policy, and record explicit approval before public release.
+
+### Work
+
+- Review every revised home-page sentence with the SME for accuracy, tone, reading level, and fit with how the clinic actually speaks to patients.
+- Confirm the public phone, full address, weekly hours, insurance carriers, new-patient status, patient portal URL, directions behavior, privacy/legal content, and every internal or external destination.
+- Validate the service framing, appointment guidance, first-visit list, refill process, test-result process, urgent-care wording, and all insurance/payment statements. Replace cautious draft language with confirmed clinic instructions where appropriate.
+- Review the protected insurance, hours, service, navigation, logo, and form wording. Change any of it only through an explicit owner correction recorded in this sprint.
+- Replace remaining POC placeholders only with confirmed values in the shared clinic configuration so home and routed pages cannot drift.
+- Approve final document titles, descriptions, canonical URL, social card copy/image, indexing expectations, privacy wording, and favicon/brand treatment.
+- Run a final content review across every route for consistency, spelling, punctuation, dates, phone/address formatting, link intent, and unsupported claims.
+- Repeat accessibility, responsive, route, clean-install, production-build, and smoke checks after approved corrections.
+- Produce the release sign-off record with the reviewer, approval date, source material, unresolved fields, and any launch restriction.
+
+### Acceptance criteria
+
+- Every public clinical or operational statement has an identified approving SME or source.
+- No prototype instruction, placeholder contact detail, generic portal destination, `#` action, or unapproved clinic/legal claim remains in public UI or metadata.
+- Shared clinic facts render from the single approved configuration and remain consistent across routes.
+- Privacy and patient-information content has explicit owner/legal approval appropriate to its use.
+- Build, lint, automated tests, accessibility checks, and route smoke tests pass after approved corrections.
+- The release checklist records SME approval and every intentionally unresolved launch blocker.
+
+### Sprint retrospective
+
+Pending. On completion, record the reviewer and approval date, source material, corrected wording and facts, metadata/canonical decisions, validation evidence, unresolved launch blockers, and final release status.
 
 ---
 

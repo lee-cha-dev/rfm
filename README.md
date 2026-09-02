@@ -20,16 +20,21 @@ wildcard 404, route focus/scroll behavior, and safe root recovery.
 ## Commands
 
 ```bash
-npm install
+npm ci
 npm run dev
 npm run lint
 npm test
+npm run test:routes
 npm run build
+npm run verify
 npm run preview
 ```
 
 `npm run dev` starts the development server. `npm run build` creates the
 production bundle in `dist`, and `npm run preview` serves that bundle locally.
+Use `npm ci` for a lockfile-exact clean install. `npm run test:routes` is the
+focused route, metadata, and accessibility smoke suite; `npm run verify` runs
+the complete lint, test, and production-build gate.
 
 ## Source architecture
 
@@ -86,16 +91,20 @@ client-side route changes. The shared interior-page header gives every dedicated
 route one level-one heading. Header navigation contains page routes only and
 marks the current page with `aria-current="page"`. Footer links retain useful
 Home deep links for Services, Hours & Location, and Contact. Route changes
-update the document title and description, reset scroll, and focus the main
-landmark.
+update the document title, description, robots directive, and social title and
+description, then reset scroll and focus the main landmark. Supported routes
+use `index, follow`; wildcard results use `noindex, nofollow`. The production
+origin is not approved, so canonical and `og:url` tags are intentionally
+deferred to the Sprint 12 metadata sign-off instead of publishing a guessed
+URL.
 
 The About route reuses the clinic story, photography, and quick-information
 card. FAQ renders all questions once through the configured category map,
-while the home route shows two. Privacy states only the known browser-only form
-behavior, links directly to Tebra's platform privacy policy, patient-portal
-terms, security notice, and Business Associate Agreement, and points to HHS
-Notice of Privacy Practices guidance. The clinic-specific notice remains
-unresolved; Sprint 11 still owns its approved privacy language.
+while the home route shows three of the six shared records. Privacy states only
+the known browser-only form behavior, links directly to Tebra's platform privacy
+policy, patient-portal terms, security notice, and Business Associate Agreement,
+and points to HHS Notice of Privacy Practices guidance. The clinic-specific
+notice remains unresolved; Sprint 12 still owns its approved privacy language.
 
 `ErrorBoundary` wraps the routed application and normalizes render failures
 through the project-owned `ERROR_CODES` catalog. The route-level 404 is separate
@@ -114,16 +123,18 @@ frozen. `validateClinicConfig` reports contract issues, while
 `createClinicConfig` returns an immutable candidate or atomically falls back to
 the known-safe POC defaults and can warn during development.
 
-The phone, address, hours, insurance list, clinical copy, operational claims,
-and generic Tebra Patient Portal destination are still POC placeholders awaiting
-clinic-owner review. External prototype links open in a new tab with referrer
-protection. Components must consume these values from configuration even while
-unverified; they must not duplicate or silently “correct” them locally.
+Sprint 11 replaced the home page's editorial notes with patient-facing draft
+copy and expanded the FAQ to six shared records. The phone, address, hours,
+insurance list, clinical claims, operational details, and generic Tebra Patient
+Portal destination still await clinic-owner review. External prototype links
+open in a new tab with referrer protection. Components must consume these
+values from configuration even while unverified; they must not duplicate or
+silently “correct” them locally.
 
 Sprint 7 records every release-sensitive value in
 `CLINIC_CONFIG.verification.fields`; all remain `unresolved`. The inventory date
-is not an approval date. Per the roadmap, Sprint 11 is the single SME-owned pass
-for final copy, placeholder replacement, privacy/legal language, URLs, metadata,
+is not an approval date. Sprint 11 owns editorial refinement; Sprint 12 owns
+SME validation, placeholder replacement, privacy/legal language, URLs, metadata,
 and release sign-off. See [`docs/sprint-7-baseline.md`](docs/sprint-7-baseline.md)
 for the accessibility evidence, dependency inventory, and component-reuse map.
 
@@ -150,9 +161,10 @@ None of these presentational sections owns state.
 
 `HoursSection` renders all seven entries from the same deeply frozen weekly
 schedule consumed by the current-status hook and reuses the platform-aware
-directions hook. `FaqSection` maps the four configured questions to native
-`details` and `summary` disclosures, preserving browser keyboard and expanded
-state behavior without custom state.
+directions hook. `FaqSection` maps three of the six configured questions to
+native `details` and `summary` disclosures; the dedicated FAQ route presents
+all six. Both preserve browser keyboard and expanded-state behavior without
+custom state.
 
 `ContactSection` owns only its controlled field values, local validation, and
 submission feedback. It has no action, request client, storage, analytics, or
@@ -178,6 +190,56 @@ source remains in the POC and is intentionally not shipped.
 
 Runtime paths and dimensions are centralized in `src/config/assets.js`. Keep
 that manifest and this table synchronized when an approved asset changes.
+
+## Contributor workflows
+
+### Add a routed page
+
+1. Add the path and its provisional metadata to `src/config/routes.js`.
+2. Create the page interface and its adjacent CSS file in `src/interfaces`.
+   Compose existing feature and base components; interfaces do not render
+   native markup directly.
+3. Register the interface beneath `SiteLayout` in `src/App.jsx`.
+4. Add navigation only where the page belongs. Keep labels and destinations in
+   `CLINIC_CONFIG` when patients or clinic staff may revise them.
+5. Extend `src/tests/Routing.test.jsx` and the cross-route accessibility cases,
+   then run `npm run test:routes` and `npm run verify`.
+
+Do not create dedicated Services or Hours routes unless the roadmap changes;
+those destinations intentionally remain Home fragments.
+
+### Maintain errors
+
+Add or revise patient-safe messages only in `src/utils/errorCodes.js`, then
+cover the mapping in `src/tests/errorNormalization.test.js`. Never place raw
+exceptions, request data, or patient-entered content in the rendered fallback.
+The boundary contract and static-host recovery behavior are documented in
+[`docs/error-handling.md`](docs/error-handling.md).
+
+### Update clinic content
+
+Make shared public facts in `src/config/clinic.js`, not in individual pages or
+sections. Update the matching `verification.fields` record with its source and
+approval state only after clinic-owner confirmation, then validate every route
+that consumes the value. The deliberate duplicated provider example is roster
+configuration in `src/config/employees.js`; each record still requires a
+unique internal `id`.
+
+### Update assets
+
+Place approved runtime media under `public/assets`, update the path and
+intrinsic dimensions in `src/config/assets.js`, and update the asset table in
+this README. Preserve meaningful alternative text at the content/configuration
+boundary. Run the asset tests and inspect all affected responsive crops before
+release.
+
+## Release readiness
+
+Sprint 10's reproducible technical and browser checks are recorded in
+[`docs/release-checklist.md`](docs/release-checklist.md). Technical readiness
+does not authorize hosting and does not substitute for the separate Sprint 12
+clinic/legal approval of contact details, claims, privacy language, metadata,
+and external destinations.
 
 ## Foundation constraints
 

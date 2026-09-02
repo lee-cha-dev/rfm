@@ -3,6 +3,7 @@ import { fireEvent, render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { MemoryRouter } from 'react-router'
 import App from '../App.jsx'
+import { ROUTE_DEFINITIONS } from '../config/routes.js'
 
 describe('Sprint 7 accessibility and metadata baseline', () => {
   it('keeps a complete, ordered heading outline and named landmarks', () => {
@@ -71,9 +72,26 @@ describe('Sprint 7 accessibility and metadata baseline', () => {
       '/assets/logos/ros-family-medicine-logo.png',
     )
     expect(document.querySelector('meta[name="theme-color"]')?.getAttribute('content')).toBe('#2b103b')
+    expect(document.querySelector('meta[name="robots"]')?.getAttribute('content')).toBe('index, follow')
     expect(document.querySelector('meta[property="og:title"]')?.getAttribute('content')).toBe(document.title)
     expect(document.querySelector('meta[property="og:description"]')?.getAttribute('content')).toBe(description)
     expect(document.querySelector('meta[name="twitter:title"]')?.getAttribute('content')).toBe(document.title)
     expect(document.querySelector('meta[name="twitter:description"]')?.getAttribute('content')).toBe(description)
+  })
+
+  it.each([...ROUTE_DEFINITIONS.map(({ path }) => path), '/unknown'])('keeps %s structurally accessible', (path) => {
+    const { container } = render(<MemoryRouter initialEntries={[path]}><App /></MemoryRouter>)
+    const ids = [...container.querySelectorAll('[id]')].map((element) => element.id)
+    const headings = screen.getAllByRole('heading')
+    const levels = headings.map((heading) => Number(heading.tagName.slice(1)))
+
+    expect(new Set(ids).size).toBe(ids.length)
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+    expect(screen.getByRole('banner')).toBeInTheDocument()
+    expect(screen.getByRole('main')).toBeInTheDocument()
+    expect(screen.getByRole('contentinfo')).toBeInTheDocument()
+    levels.slice(1).forEach((level, index) => {
+      expect(level - levels[index]).toBeLessThanOrEqual(1)
+    })
   })
 })

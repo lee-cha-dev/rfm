@@ -17,10 +17,10 @@ export const ROUTES = Object.freeze({
 })
 
 /**
- * Supplies route labels and provisional Sprint 9 metadata from one catalog.
- * Sprint 11 owns final metadata wording and sign-off.
+ * Supplies route labels and provisional Sprint 10 metadata from one catalog.
+ * Sprint 12 owns final metadata wording and sign-off.
  *
- * @type {ReadonlyArray<Readonly<{id: string, path: string, title: string, description: string}>>}
+ * @type {ReadonlyArray<Readonly<{id: string, path: string, title: string, description: string, indexable: boolean}>>}
  * @author Lee Charles
  * @since 20260902
  * @company Lazy Software
@@ -31,24 +31,28 @@ export const ROUTE_DEFINITIONS = Object.freeze([
     path: ROUTES.home,
     title: '',
     description: 'Warm, personal primary care information for individuals and families.',
+    indexable: true,
   }),
   Object.freeze({
     id: 'about',
     path: ROUTES.about,
     title: 'About',
     description: "Read the mission of Ro's Family Medicine and meet the provider behind the practice.",
+    indexable: true,
   }),
   Object.freeze({
     id: 'faq',
     path: ROUTES.faq,
     title: 'Frequently Asked Questions',
     description: 'Review patient information about visits, the portal, and insurance.',
+    indexable: true,
   }),
   Object.freeze({
     id: 'privacy',
     path: ROUTES.privacy,
     title: 'Privacy',
     description: 'Read Tebra patient-portal privacy terms, security information, and HIPAA notice guidance.',
+    indexable: true,
   }),
 ])
 
@@ -57,6 +61,7 @@ const NOT_FOUND_METADATA = Object.freeze({
   path: ROUTES.notFound,
   title: 'Page Not Found',
   description: 'The requested page could not be found.',
+  indexable: false,
 })
 
 /**
@@ -64,7 +69,7 @@ const NOT_FOUND_METADATA = Object.freeze({
  *
  * @param {string} pathname The active location pathname.
  * @param {string} brandName The clinic brand name.
- * @returns {Readonly<{id: string, path: string, title: string, description: string, documentTitle: string}>} Route metadata.
+ * @returns {Readonly<{id: string, path: string, title: string, description: string, indexable: boolean, documentTitle: string}>} Route metadata.
  * @author Lee Charles
  * @since 20260902
  * @company Lazy Software

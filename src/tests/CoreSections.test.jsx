@@ -13,7 +13,7 @@ describe('Sprint 4 core sections', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: 'Care begins with knowing who walked through the door.',
+        name: 'Your story belongs in the room.',
       }),
     ).toBeInTheDocument()
     const clinicFront = screen.getByRole('img', { name: 'Exterior view of the clinic entrance' })
@@ -36,7 +36,7 @@ describe('Sprint 4 core sections', () => {
 
     render(<ServicesSection clinic={clinic} />)
 
-    const section = screen.getByRole('region', { name: 'Care for real life.' })
+    const section = screen.getByRole('region', { name: 'Care through every stage.' })
     expect(within(section).getByRole('heading', { level: 3, name: 'Custom care' })).toBeInTheDocument()
     const serviceList = within(section).getByRole('list', { name: 'Custom care services' })
     expect(within(serviceList).getAllByRole('listitem')).toHaveLength(2)

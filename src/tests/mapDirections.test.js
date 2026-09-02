@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest'
 import { createMapDirectionsUrl, isAppleMobileUserAgent } from '../utils/mapDirections.js'
 
 describe('map-directions utilities', () => {
-  const destination = '18 Chesapeake Drive, Austin, AR 72007'
-  const encoded = '18%20Chesapeake%20Drive%2C%20Austin%2C%20AR%2072007'
+  const destination = "1898 Hunter's Ridge, Fayetteville, AR 72701"
+  const encoded = "1898%20Hunter's%20Ridge%2C%20Fayetteville%2C%20AR%2072701"
 
   it.each(['iPhone', 'Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X)', 'iPod touch'])(
     'recognizes supported Apple mobile agent %s',

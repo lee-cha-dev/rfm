@@ -5,10 +5,10 @@
 .text--eyebrow,
 .text--kicker {
   color: var(--color-purple-700);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   font-weight: 800;
   letter-spacing: var(--letter-spacing-eyebrow);
-  text-transform: uppercase;
+  text-transform: capitalize;
 }
 
 .text--eyebrow {

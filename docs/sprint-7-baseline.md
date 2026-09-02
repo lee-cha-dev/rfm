@@ -4,13 +4,13 @@
 
 Sprint 7 validates the home route as a technical accessibility, visual, and
 component baseline. Visible POC copy and placeholder information are preserved.
-Clinic-owner and subject-matter-expert review, all content rewriting, and all
-placeholder replacement are deferred to Sprint 11 so they can be completed in
-one coordinated pass after every route is structurally stable.
+Editorial rewriting is deferred to Sprint 11. Clinic-owner and
+subject-matter-expert review plus placeholder replacement are deferred to
+Sprint 12, after every route and the revised home-page draft are stable.
 
 The inventory date in `CLINIC_CONFIG.verification.reviewDate` records when the
 dependencies below were catalogued. It is not an SME approval date. A field may
-be changed from `unresolved` to `confirmed` only during the documented Sprint 11
+be changed from `unresolved` to `confirmed` only during the documented Sprint 12
 approval workflow.
 
 ## Accessibility review
@@ -50,7 +50,7 @@ build. The temporary copy was removed after verification.
 
 ## Metadata baseline
 
-- The existing POC title and description remain unchanged pending Sprint 11.
+- The existing POC title and description remain unchanged pending Sprint 12.
 - Open Graph and Twitter summary tags mirror those existing values so metadata
   cannot drift before SME approval.
 - The primary brand image is connected as the favicon, and the established
@@ -64,7 +64,7 @@ build. The temporary copy was removed after verification.
 Every item below is deliberately marked `unresolved` in
 `CLINIC_CONFIG.verification.fields`:
 
-| Field | Current POC dependency | Sprint 11 evidence required |
+| Field | Current POC dependency | Sprint 12 evidence required |
 | --- | --- | --- |
 | `phone` | `(479) 555-0142` | Owner-approved public display number and international `tel:` value. |
 | `address` | `18 Chesapeake Drive, Austin, AR 72007` | Owner-approved full public address and map query. |
@@ -78,7 +78,7 @@ Every item below is deliberately marked `unresolved` in
 | `destinationLinks` | `#` practice and full-FAQ actions plus future routed pages | Final internal routes/external URLs, labels, ownership, and behavior. |
 
 No item in this table is implied to be accurate merely because the POC renders
-it. Sprint 11 owns replacement and sign-off.
+it. Sprint 12 owns replacement and sign-off.
 
 ## Reuse decisions
 
@@ -87,7 +87,7 @@ it. Sprint 11 owns replacement and sign-off.
 | Base components and tokens | Direct reuse | Preserve as the native-markup and design-contract layer. |
 | `SiteHeader` / `SiteFooter` | Compose through the Sprint 8 site layout | Replace fragment navigation with route-aware links in Sprint 9. |
 | Hero / quick information | Home-only composition | Reuse shared config/hooks, not the complete hero, on patient-information pages. |
-| About section | Expand | Reuse photography and structure on `/about`; add only SME-approved copy in Sprint 11. |
+| About section | Expand | Reuse photography and structure on `/about`; validate public copy with the SME in Sprint 12. |
 | Services section | Direct data/structure reuse, then expand | Share service groups with `/services`; do not duplicate literals. |
 | Insurance section | Compose | Reuse the carrier presentation in patient information after SME confirmation. |
 | Hours section and hours hook | Direct reuse | Share the same schedule/status source with `/hours`. |
@@ -104,5 +104,5 @@ prototype form.
 Expanded patient-information content needs confirmed hours, address, phone,
 portal URL, insurance/payment guidance, new-patient status, appointment process,
 first-visit requirements, records/refill guidance if offered, and an owner for
-future updates. Sprint 9 may establish page structure, but Sprint 11 owns the
+future updates. Sprint 9 may establish page structure, but Sprint 12 owns the
 final public language and facts.

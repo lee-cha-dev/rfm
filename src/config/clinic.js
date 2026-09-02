@@ -77,17 +77,17 @@ const DEFAULTS = {
   contact: {
     phone: { display: '(479) 555-0142', href: '+14795550142' },
     address: {
-      display: '18 Chesapeake Drive, Austin, AR 72007',
-      mapsQuery: '18 Chesapeake Drive, Austin, AR 72007',
+      display: "1898 Hunter's Ridge, Fayetteville, AR 72701",
+      mapsQuery: "1898 Hunter's Ridge, Fayetteville, AR 72701",
     },
   },
   homeSections: {
     about: {
-      eyebrow: 'A neighborhood clinic with a face and a front door',
-      heading: 'Care begins with knowing who walked through the door.',
-      lede: 'Ro’s Family Medicine should feel familiar before a patient ever arrives: clear, welcoming, and grounded in an ongoing relationship with the people and families we care for.',
-      body: 'The clinic itself is part of the experience. Showing patients the real building and familiar interior makes the first visit feel less uncertain and gives the practice a sense of place that stock imagery cannot create.',
-      quote: 'The line “Your Health. Your Story. Our Focus.” sets the tone before a patient walks through the door.',
+      eyebrow: 'A familiar clinic in Fayetteville',
+      heading: 'Your story belongs in the room.',
+      lede: 'A useful appointment begins with listening. Tell us what changed, what you have tried, what worries you, and what you need from the visit.',
+      body: 'Family medicine works best when care builds over time. Seeing the same clinic for a wellness visit or a stubborn cough helps put today’s concern in context. So do the questions that come up between visits.',
+      quote: '“Your Health. Your Story. Our Focus.” means we listen before we make a plan.',
       link: { id: 'meet-practice', label: 'Meet the practice →', href: '/about' },
       photos: [
         {
@@ -104,8 +104,8 @@ const DEFAULTS = {
     },
     services: {
       eyebrow: 'How we care for you',
-      heading: 'Care for real life.',
-      lede: 'From routine wellness to ongoing care, our services are designed around the everyday health needs of individuals and families.',
+      heading: 'Care through every stage.',
+      lede: 'Come in for routine care or an illness that caught you off guard. We also help manage conditions that need attention over time, with a plan built for the life you are actually living.',
     },
     insurance: {
       eyebrow: 'Insurances Accepted',
@@ -116,8 +116,8 @@ const DEFAULTS = {
     },
     hours: {
       eyebrow: 'Hours & location',
-      heading: 'Come see us.',
-      body: 'The practical information gets a full section because it is one of the main reasons patients visit the site.',
+      heading: 'Plan your visit.',
+      body: 'Check the schedule before you plan the drive to our Fayetteville clinic. Around holidays or bad-weather days, please call before heading over.',
       scheduleLabel: 'Clinic hours',
       scheduleNote: 'Hours are subject to change.',
       directionsLabel: 'Get directions',
@@ -125,14 +125,14 @@ const DEFAULTS = {
     },
     faq: {
       eyebrow: 'Before your visit',
-      heading: 'Questions should be easy to answer.',
-      lede: 'A short homepage preview can lead into a categorized FAQ page instead of burying patients in an endless accordion.',
+      heading: 'A few things patients ask us.',
+      lede: 'Appointments come with practical questions. Check these answers before you grab your keys, then visit the full FAQ page when you need more detail.',
       link: { id: 'all-questions', label: 'View all patient questions →', href: '/faq' },
     },
     contact: {
       eyebrow: 'Contact Us',
       heading: 'Need to reach the clinic?',
-      body: 'Keep the path simple. For appointments, urgent concerns, or medical questions, contact the clinic by phone or use the secure Patient Portal.',
+      body: 'For appointments, call the clinic. Use the secure Patient Portal for medical questions or private details. The form beside this note is only a website preview. It does not contact the office.',
       localOnlyNotice: 'This preview form checks entries only in this browser. It does not send a message to the clinic.',
       privacyWarning: 'Please do not include private medical information.',
       privacyDetail: 'This public form is not a secure patient-messaging channel and should not be used for urgent medical concerns.',
@@ -240,27 +240,41 @@ const DEFAULTS = {
     {
       id: 'new-patients',
       question: 'Are you accepting new patients?',
-      answer: 'Use this space for the clinic’s current new-patient guidance and the best next step.',
-    },
-    {
-      id: 'patient-portal',
-      question: 'How do I access the Patient Portal?',
-      answer: 'The website links directly to the existing EMR portal; no patient account information is stored on this marketing site.',
+      answer: 'New-patient availability can change. Call the clinic before choosing us as your primary care office, and staff can tell you what appointments are open and what information they need.',
     },
     {
       id: 'first-visit',
       question: 'What should I bring to my first visit?',
-      answer: 'Use plain-language guidance for identification, insurance information, medications, and any clinic-specific forms.',
+      answer: 'Bring a photo ID, your current insurance card, and a complete list of the prescription medicines, over-the-counter medicines, vitamins, and supplements you take. Add the dose when you know it, along with any records or forms the clinic asked you to complete.',
+    },
+    {
+      id: 'patient-portal',
+      question: 'How do I access the Patient Portal?',
+      answer: 'Use the Patient Portal link on this site to reach the clinic’s Tebra portal. Sign in there for secure patient communication, and keep medical details out of the public contact form.',
     },
     {
       id: 'insurance-payment',
       question: 'Where can I find insurance and payment information?',
-      answer: 'Link this answer into a dedicated Patient Information page where details can stay current and easy to scan.',
+      answer: 'The insurance section on the home page lists the carriers currently shown for the clinic. Networks can vary by plan, so call the number on your insurance card and the clinic before your appointment to confirm coverage and ask about your expected cost.',
+    },
+    {
+      id: 'prescription-refills',
+      question: 'How do I request a prescription refill?',
+      answer: 'Contact your pharmacy before you run out and ask it to send the clinic a refill request. Some medicines may require an appointment or monitoring before another refill; the clinic will let you know if anything else is needed.',
+    },
+    {
+      id: 'test-results',
+      question: 'How will I receive my test results?',
+      answer: 'Ask how and when to expect your results when a test is ordered. If that time passes and you have not heard from the clinic, check the Patient Portal or call. A missing message does not mean the result was normal.',
     },
   ],
   faqCategories: [
     { id: 'getting-started', label: 'Getting started', faqIds: ['new-patients', 'first-visit'] },
-    { id: 'patient-resources', label: 'Patient resources', faqIds: ['patient-portal', 'insurance-payment'] },
+    {
+      id: 'patient-resources',
+      label: 'Patient resources',
+      faqIds: ['patient-portal', 'insurance-payment', 'prescription-refills', 'test-results'],
+    },
   ],
   contactReasons: [
     'General question',
@@ -501,7 +515,7 @@ export const CLINIC_CONFIG = createClinicConfig(DEFAULTS, { warn: import.meta.en
 
 /**
  * Reports whether the clinic owner has confirmed one release-sensitive field.
- * Sprint 11 can use this gate while replacing prototype values after SME sign-off.
+ * Sprint 12 can use this gate while replacing prototype values after SME sign-off.
  *
  * @param {Readonly<ClinicConfig>} clinic The validated clinic configuration.
  * @param {string} field A key from VERIFICATION_FIELDS.
