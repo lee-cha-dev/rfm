@@ -88,11 +88,11 @@ describe('clinic configuration', () => {
     })
     expect(CLINIC_CONFIG.weeklyHours).toEqual([
       { dayIndex: 0, day: 'Sunday', hours: 'Closed' },
-      { dayIndex: 1, day: 'Monday', hours: '8:00 AM \u2014 5:00 PM' },
-      { dayIndex: 2, day: 'Tuesday', hours: '8:00 AM \u2014 5:00 PM' },
-      { dayIndex: 3, day: 'Wednesday', hours: '8:00 AM \u2014 5:00 PM' },
-      { dayIndex: 4, day: 'Thursday', hours: '8:00 AM \u2014 5:00 PM' },
-      { dayIndex: 5, day: 'Friday', hours: '8:00 AM \u2014 5:00 PM' },
+      { dayIndex: 1, day: 'Monday', hours: '8:00 AM - 5:00 PM' },
+      { dayIndex: 2, day: 'Tuesday', hours: '8:00 AM - 5:00 PM' },
+      { dayIndex: 3, day: 'Wednesday', hours: '8:00 AM - 5:00 PM' },
+      { dayIndex: 4, day: 'Thursday', hours: '8:00 AM - 5:00 PM' },
+      { dayIndex: 5, day: 'Friday', hours: '8:00 AM - 5:00 PM' },
       { dayIndex: 6, day: 'Saturday', hours: 'Closed' },
     ])
     expect(CLINIC_CONFIG.contact.address).toEqual({

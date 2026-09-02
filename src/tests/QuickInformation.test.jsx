@@ -16,7 +16,7 @@ describe('QuickInformation', () => {
       </MemoryRouter>,
     )
 
-    expect(screen.getByText('Monday · 8:00 AM — 5:00 PM')).toBeInTheDocument()
+    expect(screen.getByText('Monday · 8:00 AM - 5:00 PM')).toBeInTheDocument()
     expect(screen.getByText('Currently Open')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /\(479\) 555-0142/i })).toHaveAttribute(
       'href',

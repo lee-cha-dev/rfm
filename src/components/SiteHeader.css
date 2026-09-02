@@ -113,10 +113,11 @@
   height: 2px;
   display: block;
   margin: 0;
-  overflow: hidden;
+  overflow: visible;
   color: var(--color-white);
   background: currentColor;
   font-size: 0;
+  transition: background-color var(--motion-standard) var(--ease-standard);
 }
 
 .site-header__menu-icon::before,
@@ -127,6 +128,9 @@
   height: 2px;
   content: "";
   background: var(--color-white);
+  transition:
+    top var(--motion-standard) var(--ease-standard),
+    transform var(--motion-standard) var(--ease-standard);
 }
 
 .site-header__menu-icon::before {
@@ -135,6 +139,20 @@
 
 .site-header__menu-icon::after {
   top: 7px;
+}
+
+.site-header__menu-button[aria-expanded="true"] .site-header__menu-icon {
+  background: transparent;
+}
+
+.site-header__menu-button[aria-expanded="true"] .site-header__menu-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+.site-header__menu-button[aria-expanded="true"] .site-header__menu-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
 }
 
 .site-header__mobile-navigation {

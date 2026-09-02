@@ -26,12 +26,12 @@ describe('clinic-hours utilities', () => {
     const beforeClosing = new Date(2026, 8, 7, 16, 59)
     const atClosing = new Date(2026, 8, 7, 17, 0)
 
-    expect(isClinicOpen('8:00 AM — 5:00 PM', atOpening)).toBe(true)
-    expect(isClinicOpen('8:00 AM — 5:00 PM', beforeClosing)).toBe(true)
-    expect(isClinicOpen('8:00 AM — 5:00 PM', atClosing)).toBe(false)
+    expect(isClinicOpen('8:00 AM - 5:00 PM', atOpening)).toBe(true)
+    expect(isClinicOpen('8:00 AM - 5:00 PM', beforeClosing)).toBe(true)
+    expect(isClinicOpen('8:00 AM - 5:00 PM', atClosing)).toBe(false)
   })
 
-  it.each([undefined, '', 'Closed', 'Call for hours', 'bad range', '5:00 PM — 8:00 AM'])(
+  it.each([undefined, '', 'Closed', 'Call for hours', 'bad range', '5:00 PM - 8:00 AM'])(
     'treats missing, closed, or invalid hours as closed: %s',
     (hours) => {
       expect(isClinicOpen(hours, new Date(2026, 8, 7, 10, 0))).toBe(false)
@@ -41,12 +41,12 @@ describe('clinic-hours utilities', () => {
   it('resolves configured weekdays and safely falls back when a day is missing', () => {
     const schedule = [
       { dayIndex: 0, day: 'Sunday', hours: 'Closed' },
-      { dayIndex: 1, day: 'Monday', hours: '8:00 AM — 5:00 PM' },
+      { dayIndex: 1, day: 'Monday', hours: '8:00 AM - 5:00 PM' },
     ]
 
     expect(getClinicStatus(schedule, new Date(2026, 8, 7, 8, 0))).toEqual({
       day: 'Monday',
-      hours: '8:00 AM — 5:00 PM',
+      hours: '8:00 AM - 5:00 PM',
       isOpen: true,
       status: 'Currently Open',
     })
