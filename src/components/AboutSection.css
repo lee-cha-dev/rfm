@@ -64,8 +64,8 @@
   background: var(--color-gold-600);
 }
 
-.about-section__lede {
-  margin-top: 1.5rem;
+.about-section__body--first {
+  margin: 1.5rem 0 var(--space-md);
 }
 
 .about-section__quote {

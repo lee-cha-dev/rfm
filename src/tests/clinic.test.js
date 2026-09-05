@@ -101,7 +101,9 @@ describe('clinic configuration', () => {
     })
     expect(CLINIC_CONFIG.homeSections.about.link.label).toBe('Meet the practice →')
     expect(CLINIC_CONFIG.homeSections.faq.link.label).toBe('View all patient questions →')
-    expect(CLINIC_CONFIG.homeSections.contact.submitLabel).toBe('Send message')
+    expect(CLINIC_CONFIG.homeSections.contact.body).toBe(
+      'For appointments, call the clinic. Use the secure Patient Portal for medical questions or private details.',
+    )
   })
 
   it('reports malformed fields and returns safe defaults with a development warning', () => {
@@ -112,7 +114,7 @@ describe('clinic configuration', () => {
 
     const config = createClinicConfig(invalidConfig, { warn: true })
     expect(config.brand.name).toBe("Ro's Family Medicine")
-    expect(config.contact.phone.href).toBe('+14795550142')
+    expect(config.contact.phone.href).toBe('+15018130879')
     expect(Object.isFrozen(config)).toBe(true)
     expect(warn).toHaveBeenCalledOnce()
 

@@ -32,6 +32,12 @@
   color: var(--color-white);
 }
 
+.interior-page-header__emphasis {
+  margin: 0;
+  color: var(--color-yellow-300);
+  font-weight: 400;
+}
+
 .interior-page-header__lede {
   margin-top: var(--space-lg);
   color: rgba(255, 255, 255, 0.78);

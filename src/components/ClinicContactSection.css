@@ -1,0 +1,95 @@
+.clinic-contact-section {
+  position: relative;
+  overflow: hidden;
+  color: var(--color-white);
+  background:
+    radial-gradient(circle at 8% 110%, rgba(154, 61, 217, 0.34), transparent 30rem),
+    linear-gradient(135deg, var(--color-purple-900), #1e0d29 70%);
+}
+
+.clinic-contact-section::before {
+  position: absolute;
+  top: 14%;
+  left: -230px;
+  width: 420px;
+  height: 420px;
+  content: "";
+  border: 1px solid rgba(208, 179, 102, 0.4);
+  border-radius: var(--radius-round);
+  pointer-events: none;
+}
+
+.clinic-contact-section__grid {
+  position: relative;
+  gap: var(--space-2xl);
+}
+
+.clinic-contact-section .text--eyebrow {
+  color: var(--color-gold-400);
+}
+
+.clinic-contact-section .heading {
+  /*max-width: 10ch;*/
+  color: var(--color-white);
+}
+
+.clinic-contact-section__body {
+  /*max-width: 34rem;*/
+  margin-top: 1.4rem;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.clinic-contact-section__options {
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.clinic-contact-section__option {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.1rem var(--space-lg);
+  align-items: center;
+  min-height: 7.25rem;
+  padding: 1.2rem var(--space-sm);
+  color: var(--color-white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--radius-sm);
+}
+
+.clinic-contact-section__option:hover {
+  color: var(--color-yellow-300);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.clinic-contact-section__label {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: var(--font-size-sm);
+}
+
+.clinic-contact-section__value {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-family-serif);
+  font-size: clamp(1.35rem, 4vw, 1.8rem);
+  font-weight: 500;
+}
+
+.clinic-contact-section__external-icon {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-gold-400);
+}
+
+@media (min-width: 760px) {
+  .clinic-contact-section__grid {
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 6rem;
+    align-items: start;
+  }
+}

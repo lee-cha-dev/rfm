@@ -1,6 +1,6 @@
 import InteriorPageHeader from '../components/InteriorPageHeader.jsx'
+import MissionValuesSection from '../components/MissionValuesSection.jsx'
 import PracticeTeamSection from '../components/PracticeTeamSection.jsx'
-import QuickInformation from '../components/QuickInformation.jsx'
 import { Layout } from '../components/base/index.js'
 import { CLINIC_CONFIG } from '../config/clinic.js'
 import { EMPLOYEES } from '../config/employees.js'
@@ -20,7 +20,11 @@ function AboutPage() {
 
   return (
     <Layout className="about-page">
-      <InteriorPageHeader {...content} />
+      <InteriorPageHeader
+        {...content}
+        headingEmphasis={CLINIC_CONFIG.brand.tagline[1]}
+      />
+      <MissionValuesSection content={content} />
       <PracticeTeamSection employees={EMPLOYEES} />
     </Layout>
   )

@@ -2,6 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { MemoryRouter } from 'react-router'
 import App from '../App.jsx'
+import { CLINIC_CONFIG } from '../config/clinic.js'
 
 describe('HomePage', () => {
   it('renders the complete POC section order and header brand logo', () => {
@@ -55,6 +56,10 @@ describe('HomePage', () => {
 
   it('keeps primary and footer navigation synchronized with live page targets', () => {
     const { container } = render(<MemoryRouter><App /></MemoryRouter>)
+    const phoneName = new RegExp(
+      CLINIC_CONFIG.contact.phone.display.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      'i',
+    )
     const primaryNavigation = screen.getByRole('navigation', { name: 'Primary navigation' })
     const footerNavigation = screen.getByRole('navigation', { name: 'Footer navigation' })
     const primaryLinks = within(primaryNavigation).getAllByRole('link')
@@ -81,7 +86,7 @@ describe('HomePage', () => {
       }
     }
 
-    expect(screen.getAllByRole('link', { name: /\(479\) 555-0142/i })).not.toHaveLength(0)
+    expect(screen.getAllByRole('link', { name: phoneName })).not.toHaveLength(0)
     const directionsLinks = screen.getAllByText('Get directions').map((label) => label.closest('a'))
     expect(directionsLinks).toHaveLength(2)
     directionsLinks.forEach((link) => {

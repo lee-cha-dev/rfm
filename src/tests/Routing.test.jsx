@@ -130,6 +130,14 @@ describe('application routing', () => {
   it('renders the About roster from employee configuration without repeating the home story', () => {
     renderRoute('/about')
 
+    expect(screen.getByRole('heading', { level: 2, name: 'Mission Statement' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Vision Statement' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { level: 2, name: 'Core Values' })).toBeInTheDocument()
+    const coreValues = screen.getByRole('list', { name: 'Core values' })
+    CLINIC_CONFIG.pageContent.about.coreValues.items.forEach((value) => {
+      expect(within(coreValues).getByText(value.name)).toBeInTheDocument()
+      expect(within(coreValues).getByText(value.description)).toBeInTheDocument()
+    })
     expect(screen.getByRole('heading', { level: 2, name: 'Meet the practice' })).toBeInTheDocument()
     const employeeHeadings = screen.getAllByRole('heading', { level: 3 })
     expect(employeeHeadings).toHaveLength(EMPLOYEES.length)

@@ -7,10 +7,10 @@ shortcuts, platform-aware directions, practice story, grouped services, and
 accepted-insurance matrix on top of the shared foundation. Dedicated About,
 FAQ, and Privacy routes reuse that same clinic content. Services and Hours &
 Location stay on Home, where patients can reach them without opening redundant
-pages. The home page keeps a short FAQ preview and a responsive,
-front-end-only contact form with local validation and explicit non-delivery
-feedback. React Router 8 supplies the shared site shell, route-aware navigation,
-wildcard 404, route focus/scroll behavior, and safe root recovery.
+pages. The home page keeps a short FAQ preview and a responsive clinic-contact
+panel with direct phone and secure Patient Portal links. React Router 8 supplies
+the shared site shell, route-aware navigation, wildcard 404, route focus/scroll
+behavior, and safe root recovery.
 
 ## Requirements
 
@@ -185,12 +185,9 @@ native `details` and `summary` disclosures; the dedicated FAQ route presents
 all six. Both preserve browser keyboard and expanded-state behavior without
 custom state.
 
-`ContactSection` owns only its controlled field values, local validation, and
-submission feedback. It has no action, request client, storage, analytics, or
-backend dependency. A valid submission is acknowledged only as a successful
-local review and explicitly states that nothing was sent or saved. Patients are
-directed to the configured phone number or secure Patient Portal for real clinic
-communication, and the public-form privacy warning remains visible.
+`ClinicContactSection` presents the configured phone number and secure Patient
+Portal link without collecting or submitting information through the public
+website.
 
 ## Public assets
 

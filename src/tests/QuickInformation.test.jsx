@@ -6,6 +6,11 @@ import { CLINIC_CONFIG } from '../config/clinic.js'
 
 describe('QuickInformation', () => {
   it('renders deterministic hours and contact links from clinic configuration', () => {
+    const phoneName = new RegExp(
+      CLINIC_CONFIG.contact.phone.display.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      'i',
+    )
+
     render(
       <MemoryRouter>
         <QuickInformation
@@ -18,7 +23,7 @@ describe('QuickInformation', () => {
 
     expect(screen.getByText('Monday · 8:00 AM - 5:00 PM')).toBeInTheDocument()
     expect(screen.getByText('Currently Open')).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /\(479\) 555-0142/i })).toHaveAttribute(
+    expect(screen.getByRole('link', { name: phoneName })).toHaveAttribute(
       'href',
       `tel:${CLINIC_CONFIG.contact.phone.href}`,
     )

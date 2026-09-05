@@ -1,6 +1,7 @@
 export { default as Button } from './Button.jsx'
 export { default as Disclosure } from './Disclosure.jsx'
 export { default as ErrorState } from './ErrorState.jsx'
+export { default as ExternalLinkIcon } from './ExternalLinkIcon.jsx'
 export { default as Figure } from './Figure.jsx'
 export { Form, FormField } from './Form.jsx'
 export { default as Footer } from './Footer.jsx'

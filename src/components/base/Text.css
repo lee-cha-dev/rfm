@@ -16,7 +16,7 @@
 }
 
 .text--lede {
-  max-width: 42rem;
+  /*max-width: 42rem;*/
   color: #4d4350;
   font-size: var(--font-size-lede);
 }

@@ -44,8 +44,8 @@ function AboutSection({ clinic, headingLevel = 2, showLink = true }) {
           <Layout className="about-section__copy">
             <Text variant="eyebrow">{content.eyebrow}</Text>
             <Heading level={headingLevel} id="about-heading">{content.heading}</Heading>
-            <Text variant="lede" className="about-section__lede">{content.lede}</Text>
-            <Text>{content.body}</Text>
+            <Text className="about-section__body about-section__body--first">{content.lede}</Text>
+            <Text className="about-section__body">{content.body}</Text>
             <Text variant="quote" className="about-section__quote">{content.quote}</Text>
             {showLink ? (
               <RouteLink to={content.link.href} variant="text">{content.link.label}</RouteLink>

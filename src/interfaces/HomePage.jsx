@@ -1,5 +1,5 @@
 import AboutSection from '../components/AboutSection.jsx'
-import ContactSection from '../components/ContactSection.jsx'
+import ClinicContactSection from '../components/ClinicContactSection.jsx'
 import FaqSection from '../components/FaqSection.jsx'
 import HeroSection from '../components/HeroSection.jsx'
 import HoursSection from '../components/HoursSection.jsx'
@@ -28,7 +28,7 @@ function HomePage() {
       <InsuranceSection clinic={CLINIC_CONFIG} />
       <HoursSection clinic={CLINIC_CONFIG} />
       <FaqSection clinic={CLINIC_CONFIG} />
-      <ContactSection clinic={CLINIC_CONFIG} />
+      <ClinicContactSection clinic={CLINIC_CONFIG} />
     </>
   )
 }

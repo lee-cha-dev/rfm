@@ -34,7 +34,7 @@
 }
 
 .hours-section__body {
-  max-width: 34rem;
+  /*max-width: 34rem;*/
   margin-top: 1.4rem;
   color: rgba(255, 255, 255, 0.76);
 }

@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { MemoryRouter } from 'react-router'
-import ContactSection from '../components/ContactSection.jsx'
+import ClinicContactSection from '../components/ClinicContactSection.jsx'
 import FaqSection from '../components/FaqSection.jsx'
 import HoursSection from '../components/HoursSection.jsx'
 import { CLINIC_CONFIG } from '../config/clinic.js'
@@ -52,42 +52,18 @@ describe('Sprint 5 patient-information sections', () => {
     )
   })
 
-  it('labels contact fields, exposes input hints, and uses configured reason options', () => {
-    render(<ContactSection clinic={CLINIC_CONFIG} />)
+  it('shows clinic contact information without a website message form', () => {
+    render(<ClinicContactSection clinic={CLINIC_CONFIG} />)
 
-    expect(screen.getByRole('textbox', { name: 'Name' })).toHaveAttribute('autocomplete', 'name')
-    expect(screen.getByRole('textbox', { name: 'Phone' })).toHaveAttribute('inputmode', 'tel')
-    expect(screen.getByRole('textbox', { name: 'Phone' })).toHaveAttribute('autocomplete', 'tel')
-    expect(screen.getByRole('textbox', { name: 'Email' })).toHaveAttribute('inputmode', 'email')
-    expect(screen.getByRole('textbox', { name: 'Email' })).toHaveAttribute('autocomplete', 'email')
-    expect(screen.getByRole('textbox', { name: 'Message' })).toHaveAttribute('autocomplete', 'off')
-
-    const reason = screen.getByRole('combobox', { name: 'Reason for contact' })
-    expect(within(reason).getAllByRole('option').map((option) => option.textContent)).toEqual(
-      CLINIC_CONFIG.contactReasons,
+    expect(screen.getByRole('link', { name: CLINIC_CONFIG.contact.phone.display })).toHaveAttribute(
+      'href',
+      `tel:${CLINIC_CONFIG.contact.phone.href}`,
     )
-    expect(screen.getByText(CLINIC_CONFIG.homeSections.contact.privacyWarning)).toBeInTheDocument()
-    expect(screen.getByText(/not a secure patient-messaging channel/i)).toBeInTheDocument()
-  })
-
-  it('validates locally, focuses the first invalid field, and never attempts delivery', () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response())
-    render(<ContactSection clinic={CLINIC_CONFIG} />)
-
-    const form = screen.getByRole('form', { name: 'Contact clinic' })
-    fireEvent.submit(form)
-
-    expect(screen.getAllByRole('alert')).toHaveLength(4)
-    expect(screen.getByRole('status')).toHaveTextContent('Nothing was sent')
-    expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus()
-
-    fireEvent.change(screen.getByRole('textbox', { name: 'Name' }), { target: { value: 'Lee Charles' } })
-    fireEvent.change(screen.getByRole('textbox', { name: 'Email' }), { target: { value: 'lee@example.com' } })
-    fireEvent.change(screen.getByRole('textbox', { name: 'Message' }), { target: { value: 'Please call me about becoming a patient.' } })
-    fireEvent.submit(form)
-
-    expect(screen.queryAllByRole('alert')).toHaveLength(0)
-    expect(screen.getByRole('status')).toHaveTextContent('nothing was sent or saved')
-    expect(fetchSpy).not.toHaveBeenCalled()
+    expect(screen.getByRole('link', { name: CLINIC_CONFIG.navigation.portal.label })).toHaveAttribute(
+      'href',
+      CLINIC_CONFIG.navigation.portal.href,
+    )
+    expect(screen.queryByRole('form')).not.toBeInTheDocument()
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 })

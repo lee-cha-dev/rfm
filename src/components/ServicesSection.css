@@ -1,10 +1,25 @@
 .services-section {
   position: relative;
   padding-block: 4.6rem;
+  overflow: hidden;
   background: var(--color-cream);
 }
 
+.services-section::after {
+  position: absolute;
+  bottom: -255px;
+  left: 38%;
+  width: 420px;
+  height: 420px;
+  content: "";
+  border: 1px solid rgba(166, 105, 31, 0.46);
+  border-radius: var(--radius-round);
+  pointer-events: none;
+}
+
 .services-section__grid {
+  position: relative;
+  z-index: 1;
   gap: 2.5rem;
   align-items: center;
 }

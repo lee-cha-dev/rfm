@@ -7,17 +7,19 @@
 
 .insurance-section::after {
   position: absolute;
-  bottom: -250px;
-  left: -390px;
-  width: 520px;
-  height: 520px;
+  top: 3.5rem;
+  right: -105px;
+  width: 300px;
+  height: 300px;
   content: "";
-  border: 1px solid rgba(98, 35, 140, 0.14);
+  border: 1px solid rgba(208, 179, 102, 0.72);
   border-radius: var(--radius-round);
   pointer-events: none;
 }
 
 .insurance-section__copy {
+  position: relative;
+  z-index: 1;
   max-width: 50rem;
   margin: 0 auto 2.4rem;
   text-align: center;
