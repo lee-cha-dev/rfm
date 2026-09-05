@@ -52,7 +52,7 @@ const PRIMARY_NAVIGATION = [ABOUT_LINK, FAQ_LINK, PRIVACY_LINK]
 
 const PORTAL_LINK = {
     id: 'portal',
-    label: 'Patient Portal',
+    label: 'Schedule Appointment',
     href: 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_116065',
     external: true,
 }
@@ -208,7 +208,7 @@ const DEFAULTS = {
         },
         faq: {
             eyebrow: 'Patient questions',
-            heading: 'Straight answers before the appointment.',
+            heading: 'Frequently asked questions.',
             lede: 'Start here for first-visit guidance, portal access,'
                 + ' and the insurance information currently available in this preview.',
         },
@@ -332,9 +332,9 @@ const DEFAULTS = {
         {
             id: 'patient-portal',
             question: 'How do I access the Patient Portal?',
-            answer: 'Use the Patient Portal link on this site to reach the clinic’s Tebra portal.'
-                + ' Sign in there for secure patient communication'
-                + ' or to share private medical details.',
+            answer: 'Use the Patient Portal link sent by the clinic’s Tebra portal.'
+                + ' Sign in there for secure patient communication, to review medical records,'
+                + ' request a refill, or to share private medical details.',
         },
         {
             id: 'insurance-payment',

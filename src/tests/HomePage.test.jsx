@@ -45,7 +45,7 @@ describe('HomePage', () => {
       '#main-content',
     )
 
-    const portalLinks = screen.getAllByRole('link', { name: 'Patient Portal', hidden: true })
+    const portalLinks = screen.getAllByRole('link', { name: 'Schedule Appointment', hidden: true })
     expect(portalLinks).toHaveLength(5)
     portalLinks.forEach((portal) => {
       expect(portal).toHaveAttribute('href', CLINIC_CONFIG.navigation.portal.href)
@@ -69,13 +69,13 @@ describe('HomePage', () => {
       'About',
       'FAQ',
       'Privacy',
-      'Patient Portal',
+      'Schedule Appointment',
     ])
     expect(footerLinks.map((link) => link.textContent)).toEqual([
       'About',
       'FAQ',
       'Privacy',
-      'Patient Portal',
+      'Schedule Appointment',
     ])
 
     for (const link of [...primaryLinks, ...footerLinks]) {

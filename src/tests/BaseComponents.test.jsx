@@ -56,14 +56,14 @@ describe('base component system', () => {
     const handleClick = vi.fn()
     render(
       <Layout variant="actions">
-        <Link href="https://www.tebra.com/" variant="primary" external>Patient Portal</Link>
+        <Link href="https://www.tebra.com/" variant="primary" external>Schedule Appointment</Link>
         <Button ariaLabel="Open menu" ariaControls="mobile-nav" ariaExpanded={false} onClick={handleClick}>
           Menu
         </Button>
       </Layout>,
     )
 
-    const portal = screen.getByRole('link', { name: 'Patient Portal' })
+    const portal = screen.getByRole('link', { name: 'Schedule Appointment' })
     expect(portal).toHaveAttribute('target', '_blank')
     expect(portal).toHaveAttribute('rel', 'noopener noreferrer')
 

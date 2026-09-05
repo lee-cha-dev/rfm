@@ -20,7 +20,7 @@ describe('SiteHeader', () => {
     expect(within(desktopNavigation).queryByRole('link', { name: 'Hours & location' })).not.toBeInTheDocument()
     expect(within(desktopNavigation).queryByRole('link', { name: 'Contact' })).not.toBeInTheDocument()
     expect(within(desktopNavigation).getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy')
-    const patientPortal = within(desktopNavigation).getByRole('link', { name: 'Patient Portal' })
+    const patientPortal = within(desktopNavigation).getByRole('link', { name: 'Schedule Appointment' })
     expect(patientPortal).toHaveAttribute('href', CLINIC_CONFIG.navigation.portal.href)
     expect(patientPortal).toHaveAttribute('target', '_blank')
     expect(patientPortal).toHaveAttribute('rel', 'noopener noreferrer')
