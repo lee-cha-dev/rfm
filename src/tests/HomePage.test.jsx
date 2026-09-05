@@ -48,7 +48,7 @@ describe('HomePage', () => {
     const portalLinks = screen.getAllByRole('link', { name: 'Patient Portal', hidden: true })
     expect(portalLinks).toHaveLength(5)
     portalLinks.forEach((portal) => {
-      expect(portal).toHaveAttribute('href', 'https://www.tebra.com/')
+      expect(portal).toHaveAttribute('href', CLINIC_CONFIG.navigation.portal.href)
       expect(portal).toHaveAttribute('target', '_blank')
       expect(portal).toHaveAttribute('rel', 'noopener noreferrer')
     })

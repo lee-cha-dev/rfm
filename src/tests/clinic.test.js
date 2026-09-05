@@ -19,7 +19,7 @@ describe('clinic configuration', () => {
     expect(CLINIC_CONFIG.faqs).toHaveLength(6)
     expect(CLINIC_CONFIG.assets.logos.header.src).toMatch(/^\/assets\/logos\//)
     expect(CLINIC_CONFIG.navigation.portal).toMatchObject({
-      href: 'https://www.tebra.com/',
+      href: 'https://d2oe0ra32qx05a.cloudfront.net/?practiceKey=k_1_116065',
       external: true,
     })
     expect(Object.isFrozen(CLINIC_CONFIG)).toBe(true)

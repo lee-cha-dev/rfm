@@ -21,7 +21,7 @@ describe('SiteHeader', () => {
     expect(within(desktopNavigation).queryByRole('link', { name: 'Contact' })).not.toBeInTheDocument()
     expect(within(desktopNavigation).getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy')
     const patientPortal = within(desktopNavigation).getByRole('link', { name: 'Patient Portal' })
-    expect(patientPortal).toHaveAttribute('href', 'https://www.tebra.com/')
+    expect(patientPortal).toHaveAttribute('href', CLINIC_CONFIG.navigation.portal.href)
     expect(patientPortal).toHaveAttribute('target', '_blank')
     expect(patientPortal).toHaveAttribute('rel', 'noopener noreferrer')
   })

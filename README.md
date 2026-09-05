@@ -144,11 +144,11 @@ the known-safe POC defaults and can warn during development.
 
 Sprint 11 replaced the home page's editorial notes with patient-facing draft
 copy and expanded the FAQ to six shared records. The phone, address, hours,
-insurance list, clinical claims, operational details, and generic Tebra Patient
-Portal destination still await clinic-owner review. External prototype links
-open in a new tab with referrer protection. Components must consume these
-values from configuration even while unverified; they must not duplicate or
-silently “correct” them locally.
+insurance list, clinical claims, operational details, and clinic-specific
+Tebra Patient Portal destination still await clinic-owner review. External
+prototype links open in a new tab with referrer protection. Components must
+consume these values from configuration even while unverified; they must not
+duplicate or silently “correct” them locally.
 
 Sprint 7 records every release-sensitive value in
 `CLINIC_CONFIG.verification.fields`; all remain `unresolved`. The inventory date

@@ -201,7 +201,7 @@ App entry
 - **Responsive adjustments:** Browser checks at 375px, 620–621px, 759–760px, and 1024px confirmed the service and insurance transitions, photo-stack resize, surface sequence, borders, typography, and zero horizontal overflow. The decorative photo ring is clipped by the about section at narrow widths so it cannot widen the document.
 - **Content model:** Added validated `homeSections` copy, about-link metadata, image selections, image alternatives, and insurance matrix labels to the immutable clinic configuration. Service groups and carrier names remain their existing single sources of truth.
 - **Semantics and state:** Service categories render as labeled nested lists with level-three headings, carrier names render as one labeled list, images have specific alternatives, and all three sections remain stateless.
-- **Portal verification:** Every Patient Portal action now uses the confirmed `https://www.tebra.com/` destination in a new tab with `noopener noreferrer` protection.
+- **Portal behavior:** At this stage, every Patient Portal action used the provisional `https://www.tebra.com/` destination in a new tab with `noopener noreferrer` protection; owner verification remained outstanding.
 - **Carryover/risks:** The POC's “Meet the practice” link still uses its placeholder `#` destination pending the dedicated practice-page route, and clinic story/service/insurance claims still await owner review.
 
 ---
