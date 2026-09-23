@@ -13,7 +13,7 @@ describe('Sprint 4 core sections', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: 'Your story belongs in the room.',
+        name: 'Your story belongs in this room.',
       }),
     ).toBeInTheDocument()
     const clinicFront = screen.getByRole('img', { name: 'Exterior view of the clinic entrance' })

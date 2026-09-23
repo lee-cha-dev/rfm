@@ -83,7 +83,7 @@ const DEFAULTS = {
     homeSections: {
         about: {
             eyebrow: 'Your family clinic in Fayetteville',
-            heading: 'Your story belongs in the room.',
+            heading: 'Your story belongs in this room.',
             lede: 'The appointment begins with listening.'
                 + ' Tell us what changed, what you have tried, what worries you,'
                 + ' and what you need from the visit.',
