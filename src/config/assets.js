@@ -30,7 +30,7 @@ export const ASSETS = Object.freeze({
       height: 450,
     }),
     clinicFront: Object.freeze({
-      src: `${PUBLIC_BASE_URL}assets/photos/clinic-front.jpg`,
+      src: `${PUBLIC_BASE_URL}assets/photos/clinic-front.png`,
       width: 800,
       height: 588,
     }),
@@ -40,7 +40,7 @@ export const ASSETS = Object.freeze({
       height: 900,
     }),
     waitingRoom: Object.freeze({
-      src: `${PUBLIC_BASE_URL}assets/photos/clinic-waiting-room.jpg`,
+      src: `${PUBLIC_BASE_URL}assets/photos/clinic_room.png`,
       width: 1800,
       height: 1201,
     }),
