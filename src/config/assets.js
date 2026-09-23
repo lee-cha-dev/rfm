@@ -45,7 +45,7 @@ export const ASSETS = Object.freeze({
       height: 1201,
     }),
     familyCare: Object.freeze({
-      src: `${PUBLIC_BASE_URL}assets/photos/family-care.jpg`,
+      src: `${PUBLIC_BASE_URL}assets/photos/family-care.jpeg`,
       width: 1800,
       height: 1200,
     }),

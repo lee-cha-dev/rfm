@@ -25,7 +25,7 @@ function AboutPage() {
         headingEmphasis={CLINIC_CONFIG.brand.tagline[1]}
       />
       <MissionValuesSection content={content} />
-      <PracticeTeamSection employees={EMPLOYEES} />
+      {/*<PracticeTeamSection employees={EMPLOYEES} />*/}
     </Layout>
   )
 }
