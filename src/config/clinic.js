@@ -141,7 +141,7 @@ const DEFAULTS = {
         contact: {
             eyebrow: 'Contact Us',
             heading: 'Need to reach the clinic?',
-            body: 'For appointments, click the scheduled appointment link. ' +
+            body: 'For appointments, click the schedule appointment link. ' +
                 'Use the secure Patient Portal for medical questions or private details.',
         },
     },
