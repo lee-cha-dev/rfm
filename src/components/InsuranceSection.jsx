@@ -21,6 +21,7 @@ import './InsuranceSection.css'
  */
 function InsuranceSection({ clinic }) {
   const content = clinic.homeSections.insurance
+  const hasPending = clinic.insuranceCarriers.some((c) => !c.currentlyAccepting)
 
   return (
     <Section ariaLabelledby="insurance-heading" className="insurance-section">
@@ -36,11 +37,21 @@ function InsuranceSection({ clinic }) {
             <Text as="span">{content.matrixNote}</Text>
           </Layout>
           <List
-            items={clinic.insuranceCarriers}
+            items={clinic.insuranceCarriers.map((carrier) =>
+              carrier.currentlyAccepting
+                ? carrier.name
+                : <span className="carrier--pending">{carrier.name}</span>
+            )}
             variant="matrix"
             ariaLabel="Accepted insurance plans"
             className="insurance-section__list"
           />
+          {hasPending && (
+            <p className="insurance-section__matrix-legend">
+              <span className="insurance-section__legend-mark">✗</span>
+              Pending — not yet in-network
+            </p>
+          )}
         </Layout>
       </Shell>
     </Section>

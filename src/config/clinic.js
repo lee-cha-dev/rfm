@@ -24,7 +24,7 @@ import {ASSETS} from './assets.js'
  * @property {{about: object, faq: object, privacy: object}} pageContent Dedicated-route introduction and privacy-resource copy.
  * @property {readonly ClinicHoursEntry[]} weeklyHours Seven daily schedule entries.
  * @property {readonly {id: string, label: string, items: readonly string[]}[]} services Service groups.
- * @property {readonly string[]} insuranceCarriers Accepted carrier names.
+ * @property {readonly {name: string, currentlyAccepting: boolean}[]} insuranceCarriers Carrier names with current acceptance status.
  * @property {readonly {id: string, question: string, answer: string}[]} faqs Patient questions.
  * @property {readonly {id: string, label: string, faqIds: readonly string[]}[]} faqCategories Patient-question groups.
  * @property {{reviewDate: string, fields: Record<string, 'confirmed'|'unresolved'>}} verification Owner-review state for release-sensitive content.
@@ -141,8 +141,8 @@ const DEFAULTS = {
         contact: {
             eyebrow: 'Contact Us',
             heading: 'Need to reach the clinic?',
-            body: 'For appointments, call the clinic.'
-                + ' Use the secure Patient Portal for medical questions or private details.',
+            body: 'For appointments, click the scheduled appointment link. ' +
+                'Use the secure Patient Portal for medical questions or private details.',
         },
     },
     pageContent: {
@@ -300,18 +300,18 @@ const DEFAULTS = {
         {
             id: 'family-care',
             label: 'Family care',
-            items: ["Women’s health", "Men’s health", 'Pediatric & adolescent care'],
+            items: ["Women’s health", "Men’s health", 'Pediatrics, ages 5 and older'],
         },
     ],
     insuranceCarriers: [
-        'Aetna',
-        'Cigna',
-        'Humana',
-        'Medicare',
-        'Medicaid',
-        'Centene Plans',
-        'UnitedHealthcare',
-        'Blue Cross Blue Shield',
+        {name: 'Aetna', currentlyAccepting: true},
+        {name: 'Cigna', currentlyAccepting: true},
+        {name: 'Humana', currentlyAccepting: true},
+        {name: 'Medicare', currentlyAccepting: true},
+        {name: 'Medicaid', currentlyAccepting: false},
+        {name: 'Centene Plans', currentlyAccepting: true},
+        {name: 'UnitedHealthcare', currentlyAccepting: true},
+        {name: 'Blue Cross Blue Shield', currentlyAccepting: false},
     ],
     faqs: [
         {
@@ -540,9 +540,10 @@ export function validateClinicConfig(candidate) {
         && config.services.every((group) => isText(group?.id) && isText(group?.label) && Array.isArray(group?.items) && group.items.length > 0 && group.items.every(isText))
     if (!validServices) issues.push('services must contain valid labeled groups')
 
-    if (!Array.isArray(config.insuranceCarriers) || config.insuranceCarriers.length === 0 || !config.insuranceCarriers.every(isText)) {
-        issues.push('insuranceCarriers must contain non-empty names')
-    }
+    const validCarriers = Array.isArray(config.insuranceCarriers)
+        && config.insuranceCarriers.length > 0
+        && config.insuranceCarriers.every((c) => isText(c?.name) && typeof c?.currentlyAccepting === 'boolean')
+    if (!validCarriers) issues.push('insuranceCarriers must contain entries with name and currentlyAccepting')
 
     const validFaqs = Array.isArray(config.faqs)
         && config.faqs.length > 0

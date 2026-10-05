@@ -84,6 +84,32 @@
   font-weight: 900;
 }
 
+.insurance-section__list > li:has(.carrier--pending)::before {
+  content: "✗";
+  color: var(--color-muted);
+}
+
+.insurance-section__matrix-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1.05rem;
+  margin: 0;
+  color: var(--color-muted);
+  border-top: var(--border-standard);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.insurance-section__legend-mark {
+  font-family: var(--font-family-sans);
+  font-size: 0.75rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
 .insurance-section__list > li:nth-child(odd) {
   border-right: var(--border-standard);
 }
