@@ -75,9 +75,6 @@
   color: var(--color-white);
 }
 
-.mission-values__core-heading .heading {
-  max-width: 9ch;
-}
 
 .mission-values__list.list {
   padding: 0;
