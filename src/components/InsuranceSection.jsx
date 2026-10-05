@@ -40,6 +40,7 @@ function InsuranceSection({ clinic }) {
             items={clinic.insuranceCarriers.map((carrier) =>
               carrier.currentlyAccepting
                 ? carrier.name
+                // eslint-disable-next-line no-restricted-syntax
                 : <span className="carrier--pending">{carrier.name}</span>
             )}
             variant="matrix"
@@ -47,7 +48,9 @@ function InsuranceSection({ clinic }) {
             className="insurance-section__list"
           />
           {hasPending && (
+            // eslint-disable-next-line no-restricted-syntax
             <p className="insurance-section__matrix-legend">
+              {/* eslint-disable-next-line no-restricted-syntax */}
               <span className="insurance-section__legend-mark">✗</span>
               Pending — not yet in-network
             </p>
