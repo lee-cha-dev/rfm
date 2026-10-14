@@ -108,7 +108,7 @@ const DEFAULTS = {
         },
         services: {
             eyebrow: 'How we care for you',
-            heading: 'Care through every stage.',
+            heading: 'Care through every stage of life.',
             lede: 'Come in for routine care or an illness that caught you off guard.'
                 + ' We also help manage conditions that need attention over time,'
                 + ' with a plan built for the life you are actually living.',
@@ -306,7 +306,7 @@ const DEFAULTS = {
     insuranceCarriers: [
         {name: 'Aetna', currentlyAccepting: true},
         {name: 'Cigna', currentlyAccepting: true},
-        {name: 'Humana', currentlyAccepting: true},
+        {name: 'Humana', currentlyAccepting: false},
         {name: 'Medicare', currentlyAccepting: true},
         {name: 'Medicaid', currentlyAccepting: false},
         {name: 'Centene Plans', currentlyAccepting: true},
