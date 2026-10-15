@@ -17,8 +17,7 @@ export const ROUTES = Object.freeze({
 })
 
 /**
- * Supplies route labels and provisional Sprint 10 metadata from one catalog.
- * Sprint 12 owns final metadata wording and sign-off.
+ * Supplies search and social metadata for each public route from one catalog.
  *
  * @type {ReadonlyArray<Readonly<{id: string, path: string, title: string, description: string, indexable: boolean}>>}
  * @author Lee Charles
@@ -30,28 +29,28 @@ export const ROUTE_DEFINITIONS = Object.freeze([
     id: 'home',
     path: ROUTES.home,
     title: '',
-    description: 'Warm, personal primary care information for individuals and families.',
+    description: "Ro's Family Medicine provides primary care in Fayetteville, AR, including wellness visits, sick visits, and chronic condition management. Call to schedule.",
     indexable: true,
   }),
   Object.freeze({
     id: 'about',
     path: ROUTES.about,
     title: 'About',
-    description: "Read the mission of Ro's Family Medicine and meet the provider behind the practice.",
+    description: "Meet the provider behind Ro's Family Medicine in Fayetteville, AR, and learn about our approach to personal primary care for individuals and families.",
     indexable: true,
   }),
   Object.freeze({
     id: 'faq',
     path: ROUTES.faq,
     title: 'Frequently Asked Questions',
-    description: 'Review patient information about visits, the portal, and insurance.',
+    description: "Find answers from Ro's Family Medicine about new patients, first visits, insurance, the patient portal, prescription refills, and test results.",
     indexable: true,
   }),
   Object.freeze({
     id: 'privacy',
     path: ROUTES.privacy,
     title: 'Privacy',
-    description: 'Read Tebra patient-portal privacy terms, security information, and HIPAA notice guidance.',
+    description: "Read privacy information from Ro's Family Medicine, with links to Tebra patient-portal terms, security resources, and HIPAA notice guidance.",
     indexable: true,
   }),
 ])
